@@ -14,8 +14,9 @@ import java.util.ArrayList;
 
 public class CustomAdapterSubDisease extends RecyclerView.Adapter<CustomAdapterSubDisease.MyViewHolder> {
 
-    ArrayList<String> diseaseNames = new ArrayList<>();
-
+    ArrayList<String> diseaseNames;
+    ArrayList<String> mImageUrls;
+    ArrayList<String> mRecordText;
     Context context;
 
     public CustomAdapterSubDisease(Context context, ArrayList<String> diseaseNames) {

@@ -22,7 +22,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 public class SubDiseaseActivity extends AppCompatActivity {
-    ArrayList<String> subDiseases = new ArrayList<>();
+    public ArrayList<String> subDiseases = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
