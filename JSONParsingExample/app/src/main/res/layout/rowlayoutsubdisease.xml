@@ -22,19 +22,55 @@
             android:id="@+id/subDiseaseName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Name"
+            android:text=""
             android:textColor="#000"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <!-- This adds a border between the TextViews -->
         <View
             android:layout_width="match_parent"
             android:layout_height="10dp" />
 
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp" />
+
+        <TextView
+            android:id="@+id/fileText1"
+            android:layout_width="382dp"
+            android:layout_height="50dp"
+            android:background="#B7E9F7"
+            android:text=""
+            android:textColor="#000"
+            android:textSize="20sp" />
+
         <ImageView
-            android:id="@+id/record_img"
+            android:id="@+id/img1"
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:background="#B7E9F7"
+            android:src="@mipmap/ic_launcher"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp" />
+
+        <TextView
+            android:id="@+id/fileText2"
+            android:layout_width="382dp"
+            android:layout_height="50dp"
+            android:background="#B7E9F7"
+            android:text=""
+            android:textColor="#000"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/img2"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="#B7E9F7"
             android:src="@mipmap/ic_launcher"/>
 
     </LinearLayout>
