@@ -21,15 +21,17 @@ import java.util.ArrayList;
 
 public class CustomAdapterSubDisease extends RecyclerView.Adapter<CustomAdapterSubDisease.MyViewHolder> {
 
+    private final String patientCPR;
+    private final String patientName;
     ArrayList<SubDiseaseItem> diseaseNames;
-    ArrayList<String> mImageUrls;
-    ArrayList<String> mRecordText;
     Context context;
     SubDiseaseItem item;
 
-    public CustomAdapterSubDisease(Context context, ArrayList<SubDiseaseItem> diseaseNames) {
+    public CustomAdapterSubDisease(Context context, ArrayList<SubDiseaseItem> diseaseNames, String mPatientName, String mPatientCPR) {
         this.context = context;
         this.diseaseNames = diseaseNames;
+        this.patientName = mPatientName;
+        this.patientCPR = mPatientCPR;
     }
 
     @Override
@@ -57,36 +59,52 @@ public class CustomAdapterSubDisease extends RecyclerView.Adapter<CustomAdapterS
             holder.img2.setVisibility(View.GONE);
         }
 
-        holder.fileText1.setText(item.getFileText1());
-        if(item.getFileText1().equals("")){
+        final String text1 = item.getFileText1();
+        holder.fileText1.setText(text1);
+        if(text1.equals("")){
             holder.fileText1.setVisibility(View.GONE);
         }
 
-        holder.fileText2.setText(item.getFileText2());
-        System.out.println("!!!!!"+(item.getFileText2().length()));
-        if(item.getFileText2().equals("")){
+        final String text2 = item.getFileText2();
+        holder.fileText2.setText(text2);
+        if(text2.equals("")){
             holder.fileText2.setVisibility(View.GONE);
         }
 
-        String imageUrl1 = item.getImageUrl1();
-        String imageUrl2 = item.getImageUrl2();
+        final String imageUrl1 = item.getImageUrl1();
+        final String imageUrl2 = item.getImageUrl2();
         if(imageUrl1.equals("")){
             holder.img1.setVisibility(View.GONE);
-        } else Picasso.get().load(imageUrl1).fit().centerInside().into(holder.img1);
+        } else {
+            Picasso.get().load(imageUrl1).fit().centerInside().into(holder.img1);
+            holder.img1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, DetailActivity.class);
+                    intent.putExtra("url", imageUrl1);
+                    intent.putExtra("patientName", patientName);
+                    intent.putExtra("cpr", patientCPR);
+                    intent.putExtra("recordName", text1);
+                    context.startActivity(intent);
+                }
+            });
+        }
         if(imageUrl2.equals("")){
             holder.img2.setVisibility(View.GONE);
-        } else  Picasso.get().load(imageUrl2).fit().centerInside().into(holder.img2);
-
-
-        // implement setOnClickListener event on item view.
-        holder.img1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // display a toast with person name on item click
-                //Toast.makeText(context, diseaseNames.get(position), Toast.LENGTH_SHORT).show();
-            }
-        });
-
+        } else{
+            Picasso.get().load(imageUrl2).fit().centerInside().into(holder.img2);
+            holder.img2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, DetailActivity.class);
+                    intent.putExtra("url", imageUrl2);
+                    intent.putExtra("patientName", patientName);
+                    intent.putExtra("cpr", patientCPR);
+                    intent.putExtra("recordName", text2);
+                    context.startActivity(intent);
+                }
+            });
+        }
 
     }
 

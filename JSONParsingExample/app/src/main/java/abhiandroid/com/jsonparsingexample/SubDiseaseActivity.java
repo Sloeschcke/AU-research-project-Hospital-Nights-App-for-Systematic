@@ -72,7 +72,7 @@ public class SubDiseaseActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
-        CustomAdapterSubDisease customAdapter = new CustomAdapterSubDisease(SubDiseaseActivity.this, subDiseases);
+        CustomAdapterSubDisease customAdapter = new CustomAdapterSubDisease(SubDiseaseActivity.this, subDiseases, patientName, patientCPR);
         recyclerView.setAdapter(customAdapter); // set the Adapter to RecyclerView
     }
 
