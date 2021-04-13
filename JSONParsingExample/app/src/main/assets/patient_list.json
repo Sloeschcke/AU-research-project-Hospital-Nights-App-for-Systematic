@@ -1,0 +1,100 @@
+{"patients": [
+  {
+    "cpr": "010220-0111",
+    "name": "Patient A"
+  }
+],
+  "users": [
+    {
+      "id": "1087",
+      "name": "Abhishek Saini",
+      "email": "saini.abhishek@gmail.com",
+      "gender": "male",
+      "contact": {
+        "mobile": "+91 0000000000",
+        "home": "00 000000",
+        "office": "00 000000"
+      }
+    },
+    {
+      "id": "1088",
+      "name": "Gourav",
+      "email": "gourav9188@gmail.com",
+      "gender": "male",
+      "contact": {
+        "mobile": "+91 0000000000",
+        "home": "00 000000",
+        "office": "00 000000"
+      }
+    }
+  ],
+  "diseases": [
+    {
+      "diseaseName": "Disease A",
+      "treatment": "Treatment Z",
+      "medication": "Iboprohen",
+      "plannedSurgery": "",
+      "subDiseases": [
+        {"subDisease": "subDisease A",
+          "imageUrl1":  "https://www.researchgate.net/profile/Richard-Pak/publication/249955888/figure/fig1/AS:339811522105355@1458028788794/Hard-copy-patient-record.png",
+          "fileText1":  "Patient_Record1.png",
+          "imageUrl2":  "http://epromedical.com/wp-content/uploads/2019/09/Patients-1.jpg",
+          "fileText2":  "Patient_Record2.png"},
+        {"subDisease": "subDisease B",
+          "imageUrl1":  "",
+          "fileText1":  "CostOfTreatment.csv",
+          "imageUrl2":  "",
+          "fileText2":  ""}
+      ]
+    },
+    {
+      "diseaseName": "Disease B",
+      "treatment": "",
+      "medication": "",
+      "plannedSurgery": "Surgery planned 05/11/2021",
+      "subDiseases": [
+        {"subDisease": "subDisease A",
+          "imageUrl1":  "http://epromedical.com/wp-content/uploads/2019/09/Patients-1.jpg",
+          "fileText1":  "Patient_Record1010.png",
+          "imageUrl2":  "",
+          "fileText2":  ""}
+      ]
+    },
+    {
+      "diseaseName": "Disease C",
+      "treatment": "Treatment: Exondys 51",
+      "medication": "Medication: Parcetemol",
+      "plannedSurgery": "Surgery planned: 01/09/2021",
+      "subDiseases": [
+        {"subDisease": "subDisease B",
+          "imageUrl1":  "https://www.auh.dk/siteassets/afdelinger/rontgen-og-skanning/undersidebilleder/hander690x345px.jpg",
+          "fileText1":  "file1010.png",
+          "imageUrl2":  "",
+          "fileText2":  ""},
+        {"subDisease": "subDisease A",
+          "imageUrl1":  "https://www.researchgate.net/profile/Richard-Pak/publication/249955888/figure/fig1/AS:339811522105355@1458028788794/Hard-copy-patient-record.png",
+          "fileText1":  "Patient_Record1_png",
+          "imageUrl2":  "http://epromedical.com/wp-content/uploads/2019/09/Patients-1.jpg",
+          "fileText2":  "Patient_Record2_png"}
+      ]
+    },
+    {
+      "diseaseName": "Disease D",
+      "treatment": "",
+      "medication": "Medication: Parcetemol",
+      "plannedSurgery": "",
+      "subDiseases": [
+        {"subDisease": "subDisease B",
+          "imageUrl1":  "https://www.auh.dk/siteassets/afdelinger/rontgen-og-skanning/undersidebilleder/hander690x345px.jpg",
+          "fileText1":  "file1010.png",
+          "imageUrl2":  "",
+          "fileText2":  ""},
+        {"subDisease": "subDisease A",
+          "imageUrl1":  "https://www.researchgate.net/profile/Richard-Pak/publication/249955888/figure/fig1/AS:339811522105355@1458028788794/Hard-copy-patient-record.png",
+          "fileText1":  "Patient_Record1_png",
+          "imageUrl2":  "http://epromedical.com/wp-content/uploads/2019/09/Patients-1.jpg",
+          "fileText2":  "Patient_Record2_png"}
+      ]
+    }
+  ]
+}
