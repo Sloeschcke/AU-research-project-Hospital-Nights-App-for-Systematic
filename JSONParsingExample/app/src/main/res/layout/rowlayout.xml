@@ -37,6 +37,7 @@
             android:layout_height="60dp"
             android:background="#B7E9F7"
             android:text="email@email.com"
+            android:gravity="left|center"
             android:textColor="#000"
             android:textSize="15sp" />
         <!-- This adds a border between the TextViews -->
@@ -49,6 +50,7 @@
             android:layout_width="345dp"
             android:layout_height="60dp"
             android:text="e9999999999"
+            android:gravity="left|center"
             android:background="#B7E9F7"
             android:textColor="#000"
             android:textSize="15sp" />

@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,7 +13,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Iterator;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> medications= new ArrayList<>();
     ArrayList<String> plannedSurgeries= new ArrayList<>();
     ArrayList<ArrayList<SubDiseaseItem>> subDiseases = new ArrayList<ArrayList<SubDiseaseItem>>();
+
+    ArrayList<ArrayList<String>> listListItem= new ArrayList<ArrayList<String>>();
     String patientName ="";
     String patientCPR ="";
 
@@ -47,18 +48,44 @@ public class MainActivity extends AppCompatActivity {
             // Get patient Name and CPR
             JSONObject patientDetail = obj.getJSONArray("patients").getJSONObject(0);
             // fetch name and cpr and store it in arraylist
-            patientName =  patientDetail.getString("name");
-            patientCPR =  patientDetail.getString("cpr");
-            System.out.println(patientName);
-            System.out.println(patientCPR);
+            patientName = patientDetail.getString("name");
+            patientCPR = patientDetail.getString("cpr");
 
 
             // fetch JSONArray named diseases
-            JSONArray diseaseArray = obj.getJSONArray("diseases");
+            JSONArray diseaseArray = obj.getJSONArray("layer1");
+
+            /*
+            JSONObject object = new JSONObject ();
+            JSONArray keys = object.names ();
+
+            for (int i = 0; i < keys.length (); i++) {
+
+                String key = keys.getString (i); // Here's your key
+                String value = object.getString (key); // Here's your value
+
+            }*/
+
+
             // implement for loop for getting list data
             for (int i = 0; i < diseaseArray.length(); i++) {
-                // create a JSONObject for fetching single user data
-                JSONObject userDetail = diseaseArray.getJSONObject(i);
+                ArrayList<String>listItem= new ArrayList<String>();
+                try {
+                    // create a JSONObject for fetching single user data
+                    JSONObject innerObj = diseaseArray.getJSONObject(i);
+                    Iterator<String> keys = innerObj.keys();
+                    do {
+                        String keyValue = (String) keys.next();
+                        START FROM HERE !!!!!!!
+                        if (innerObj.get(keyValue) instanceof JSONObject) {
+                            continue;
+                        } else {
+
+                        }
+                        } while (keys.hasNext()) ;
+                    } catch(JSONException e){
+                        e.printStackTrace();
+                    }
                 // fetch data and store it in arraylist
                 diseaseNames.add(userDetail.getString("diseaseName"));
                 treatments.add(userDetail.getString("treatment"));
@@ -81,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
     public String loadJSONFromAsset() {
         String json = null;
         try {
-            InputStream is = getAssets().open("patient_list.json");
+            InputStream is = getAssets().open("patient_list1.json");
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);

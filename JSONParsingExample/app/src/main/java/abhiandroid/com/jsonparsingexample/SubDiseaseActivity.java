@@ -122,7 +122,7 @@ public class SubDiseaseActivity extends AppCompatActivity {
     public String loadJSONFromAsset() {
         String json = null;
         try {
-            InputStream is = getAssets().open("patient_list.json");
+            InputStream is = getAssets().open("patient_list1.json");
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
