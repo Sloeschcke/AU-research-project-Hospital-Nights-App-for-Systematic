@@ -13,7 +13,8 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="#7AD7F0"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:id="@+id/linLayout">
 
         <!--
         items for a single row of RecyclerView

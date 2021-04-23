@@ -1,5 +1,6 @@
 package abhiandroid.com.jsonparsingexample;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -40,10 +41,11 @@ public class MainActivity extends AppCompatActivity {
         // set a LinearLayoutManager with default vertical orientation
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(linearLayoutManager);
-
+        JSONArray jsonInnerArray = new JSONArray();
+        String arrayName = "";
         try {
             // get JSONObject from JSON file
-            JSONObject obj = new JSONObject(loadJSONFromAsset());
+            JSONObject obj = new JSONObject(loadJSONFromAsset(getApplicationContext()));
 
             // Get patient Name and CPR
             JSONObject patientDetail = obj.getJSONArray("patients").getJSONObject(0);
@@ -53,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
 
             // fetch JSONArray named diseases
-            JSONArray diseaseArray = obj.getJSONArray("layer1");
+            JSONArray layer1 = obj.getJSONArray("layer1");
 
             /*
             JSONObject object = new JSONObject ();
@@ -66,31 +68,42 @@ public class MainActivity extends AppCompatActivity {
 
             }*/
 
+            ArrayList<JSONObject> jsonObjs= new ArrayList<JSONObject>();
+            //JSONArray jsonInnerArray;
 
             // implement for loop for getting list data
-            for (int i = 0; i < diseaseArray.length(); i++) {
+            for (int i = 0; i < layer1.length(); i++) {
                 ArrayList<String>listItem= new ArrayList<String>();
                 try {
+
                     // create a JSONObject for fetching single user data
-                    JSONObject innerObj = diseaseArray.getJSONObject(i);
+                    JSONObject innerObj = layer1.getJSONObject(i);
+                    jsonObjs.add(innerObj);
                     Iterator<String> keys = innerObj.keys();
                     do {
                         String keyValue = (String) keys.next();
-                        START FROM HERE !!!!!!!
-                        if (innerObj.get(keyValue) instanceof JSONObject) {
+                        boolean keyValueIsObject= innerObj.getString(keyValue).substring(0,1).equals("[");
+                        if (keyValueIsObject) {
+                            jsonInnerArray = innerObj.getJSONArray(keyValue);
+                            arrayName = keyValue;
+                            System.out.println(jsonInnerArray );
+                            System.out.println("HEY");
+
                             continue;
                         } else {
-
+                            String tmp = innerObj.getString(keyValue).substring(0,1);
+                            System.out.println(tmp);
+                            System.out.println(keyValue);
                         }
                         } while (keys.hasNext()) ;
                     } catch(JSONException e){
                         e.printStackTrace();
                     }
                 // fetch data and store it in arraylist
-                diseaseNames.add(userDetail.getString("diseaseName"));
-                treatments.add(userDetail.getString("treatment"));
-                medications.add(userDetail.getString("medication"));
-                plannedSurgeries.add(userDetail.getString("plannedSurgery"));
+                //diseaseNames.add(userDetail.getString("diseaseName"));
+                //treatments.add(userDetail.getString("treatment"));
+                //medications.add(userDetail.getString("medication"));
+                //plannedSurgeries.add(userDetail.getString("plannedSurgery"));
             }
 
         } catch (JSONException e) {
@@ -98,17 +111,19 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
-        CustomAdapterDisease customAdapter = new CustomAdapterDisease(MainActivity.this, diseaseNames, treatments, medications,plannedSurgeries, subDiseases);
+        CustomAdapterJsonObjects customAdapter = new CustomAdapterJsonObjects(MainActivity.this,arrayName, jsonInnerArray, patientName,patientCPR);
         recyclerView.setAdapter(customAdapter); // set the Adapter to RecyclerView
+        //CustomAdapterDisease customAdapter = new CustomAdapterDisease(MainActivity.this, diseaseNames, treatments, medications,plannedSurgeries, subDiseases);
+        //recyclerView.setAdapter(customAdapter); // set the Adapter to RecyclerView
 
         // create toolbar with description of patient
         makeToolBar(patientName, patientCPR);
     }
 
-    public String loadJSONFromAsset() {
+    public static String loadJSONFromAsset(Context context) {
         String json = null;
         try {
-            InputStream is = getAssets().open("patient_list1.json");
+            InputStream is = context.getAssets().open("patient_list1.json");
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
