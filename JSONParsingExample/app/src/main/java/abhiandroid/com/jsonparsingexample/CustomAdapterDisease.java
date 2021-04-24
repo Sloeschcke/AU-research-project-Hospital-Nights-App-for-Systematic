@@ -36,7 +36,7 @@ public class CustomAdapterDisease extends RecyclerView.Adapter<CustomAdapterDise
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // infalte the item Layout
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.rowlayouthospital, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.rowlayouthospital_nondynamic, parent, false);
         MyViewHolder vh = new MyViewHolder(v); // pass the view to View Holder
         return vh;
     }

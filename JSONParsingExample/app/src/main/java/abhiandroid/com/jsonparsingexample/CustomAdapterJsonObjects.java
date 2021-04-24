@@ -2,25 +2,20 @@ package abhiandroid.com.jsonparsingexample;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -53,11 +48,13 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
 
         int numberOfItems = 0;
         try {
-            JSONObject innerObj = jsonArray.getJSONObject(0);
-            numberOfItems =innerObj.length();
-            System.out.println("!!!!!");
-            System.out.println(innerObj);
-
+            for(int i = 0; i < jsonArray.length(); i++){
+                JSONObject innerObj = jsonArray.getJSONObject(i);
+                int innerLength =innerObj.length();
+                if (innerLength > numberOfItems){
+                    numberOfItems = innerLength;
+                }
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -66,7 +63,6 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
     }
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
-
         ArrayList<String> itemStrings = new ArrayList<>();
         int numberOfItems =0;
         try {
@@ -93,31 +89,17 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
             e.printStackTrace();
         }
 
-
-        // implement for loop for getting list data
-        /*for (int i = 0; i < jsonArray.length(); i++) {
-            try {
-                // create a JSONObject for fetching single user data
-                JSONObject innerObj = jsonArray.getJSONObject(i);
-                Iterator<String> keys = innerObj.keys();
-                do {
-                    String keyValue = (String) keys.next();
-                    boolean keyValueIsObject= innerObj.getString(keyValue).substring(0,1).equals("[");
-                    if (keyValueIsObject) {
-                        innerArray = innerObj.getJSONArray(keyValue);
-                        System.out.println("innerArray");
-
-                        continue;
-                    } else {
-                        System.out.println(keyValue);
-                        holder.diseaseName.setText(keyValue);
-                    }
-                } while (keys.hasNext()) ;
-            } catch(JSONException e){
-                e.printStackTrace();
+        // hide views with no text
+        for (int j = 0; j < holder.tv.length; j=j+2){
+            TextView view = (TextView) holder.tv[j];
+            boolean isEmptyTextView =view.getText().toString().equals("");
+            if( isEmptyTextView ){
+                view.setVisibility(View.GONE);
+                if(j > 0){
+                    ((View) holder.tv[j-1]).setVisibility(View.GONE);
+                }
             }
-        }*/
-
+        }
     }
 
     @Override
@@ -127,25 +109,21 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
+        private int numberOfItems;
         private View borderTitle;
         private TextView titleView;
         private View border;
-        TextView diseaseName, treatment, medication, plannedSurgery;// init the item view's
         LinearLayout myLinearLayout;
         View[] tv;
 
         @SuppressLint("ResourceType")
         public MyViewHolder(View itemView, int numberOfItems) {
             super(itemView);
+            this.numberOfItems = numberOfItems;
             tv = new View[numberOfItems*2];
             int counter = 0;
 
-            // get the reference of item view's
-            diseaseName = (TextView) itemView.findViewById(R.id.diseaseName);
-            treatment = (TextView) itemView.findViewById(R.id.treatment);
-            medication = (TextView) itemView.findViewById(R.id.medication);
-            plannedSurgery = (TextView) itemView.findViewById(R.id.plannedSurgery);
-            myLinearLayout= (LinearLayout) itemView.findViewById(R.id.linLayout);
+            myLinearLayout = (LinearLayout) itemView.findViewById(R.id.linLayout);
 
             int size = numberOfItems; // total number of TextViews to add
             int textViewBorder = context.getResources().getDimensionPixelSize(R.dimen.textViewborder);
