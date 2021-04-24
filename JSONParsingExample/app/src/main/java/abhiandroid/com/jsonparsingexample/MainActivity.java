@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
-        CustomAdapterJsonObjects customAdapter = new CustomAdapterJsonObjects(MainActivity.this,arrayName, layer1, patientName,patientCPR);
+        CustomAdapterJsonObjects customAdapter = new CustomAdapterJsonObjects(MainActivity.this, layer1, patientName,patientCPR);
         recyclerView.setAdapter(customAdapter); // set the Adapter to RecyclerView
         //CustomAdapterDisease customAdapter = new CustomAdapterDisease(MainActivity.this, diseaseNames, treatments, medications,plannedSurgeries, subDiseases);
         //recyclerView.setAdapter(customAdapter); // set the Adapter to RecyclerView

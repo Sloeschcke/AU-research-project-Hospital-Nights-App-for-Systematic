@@ -2,6 +2,7 @@ package abhiandroid.com.jsonparsingexample;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,7 +26,6 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
 
     private final String patientName;
     private final String cpr;
-    private final String arrayName;
     private final int arraySize;
     JSONArray jsonArray;
     ArrayList<String> items;
@@ -32,11 +33,10 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
 
     Context context;
 
-    public CustomAdapterJsonObjects(Context context, String arrayName, JSONArray jsonArray, String patientName, String cpr) {
+    public CustomAdapterJsonObjects(Context context, JSONArray jsonArray, String patientName, String cpr) {
         this.context = context;
         this.jsonArray= jsonArray;
         this.patientName = patientName;
-        this.arrayName = arrayName;
         this.cpr = cpr;
         this.arraySize = jsonArray.length();
     }
@@ -63,21 +63,39 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
     }
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
-        ArrayList<String> itemStrings = new ArrayList<>();
-        int numberOfItems =0;
         try {
             int mCounter =0;
-            JSONObject innerObj = jsonArray.getJSONObject(position);
-            numberOfItems =innerObj.length();
+            final JSONObject innerObj = jsonArray.getJSONObject(position);
             Iterator<String> keys = innerObj.keys();
             do {
-                String keyValue = (String) keys.next();
+                final String keyValue = (String) keys.next();
                 boolean keyValueIsObject= innerObj.getString(keyValue).substring(0,1).equals("[");
                 if (keyValueIsObject) {
                     // use key as title
-                    ( (TextView) holder.tv[mCounter ]).setText(keyValue);
+                    TextView view = (TextView) holder.tv[mCounter ];
+                    view.setText(keyValue);
                     mCounter  = mCounter+2;
                     //add onclick listener
+                    view.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            // display a toast with person name on item click
+                            Toast.makeText(context, keyValue, Toast.LENGTH_SHORT).show();
+                            JSONArray subArray = new JSONArray();
+                            try {
+                                subArray = innerObj.getJSONArray(keyValue);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            Intent intent = new Intent(context, SubDiseaseActivity.class);
+                            //intent.putStringArrayListExtra("subDiseases",new ArrayList<>(subDiseases.get(position)));
+                            intent.putExtra("patientName", patientName);
+                            intent.putExtra("cpr", cpr);
+                            intent.putExtra("jsonArray", subArray.toString());
+                            context.startActivity(intent);
+
+                        }
+                    });
                 } else {
                     String txt = innerObj.getString(keyValue);
                     ( (TextView) holder.tv[mCounter]).setText(txt);

@@ -1,5 +1,6 @@
 package abhiandroid.com.jsonparsingexample;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -23,12 +24,16 @@ public class SubDiseaseActivity extends AppCompatActivity {
     public int position;
     String patientName ="";
     String patientCPR ="";
+    JSONArray jsonArray = new JSONArray();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sub_disease);
-        position = getIntent().getIntExtra("position", 0);
+        Intent intent = getIntent();
+        patientName= intent.getStringExtra("patientName");
+        patientCPR= intent.getStringExtra("cpr");
+        String jsonArrayString = intent.getStringExtra("jsonArray");
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
@@ -37,43 +42,17 @@ public class SubDiseaseActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
 
 
-
-        makeToolBar();
-
-
         try {
-            // get JSONObject from JSON file
-            JSONObject obj = new JSONObject(loadJSONFromAsset());
-
-            // Get patient Name and CPR
-            JSONObject patientDetail = obj.getJSONArray("patients").getJSONObject(0);
-            // fetch name and cpr and store it in arraylist
-            patientName =  patientDetail.getString("name");
-            patientCPR =  patientDetail.getString("cpr");
-
-
-            // fetch JSONArray named diseases
-            JSONArray diseaseArray = obj.getJSONArray("diseases");
-            // create a JSONObject for fetching single user data at position received from intent
-            JSONObject userDetail = diseaseArray.getJSONObject(position);
-            JSONArray subD = userDetail.getJSONArray("subDiseases");
-            // fetch subDiseases and store it in arraylist
-            for (int j = 0; j < subD.length(); j++) {
-                JSONObject item = subD.getJSONObject(j);
-                String subDisease = item.getString("subDisease");
-                String imageUrl1 = item.getString("imageUrl1");
-                String fileText1 = item.getString("fileText1");
-                String imageUrl2 = item.getString("imageUrl2");
-                String fileText2 = item.getString("fileText2");
-                SubDiseaseItem subDiseaseItem = new SubDiseaseItem(subDisease, fileText1, imageUrl1, fileText2, imageUrl2);
-                subDiseases.add(subDiseaseItem);
-            }
+            jsonArray= new JSONArray(jsonArrayString);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
-        CustomAdapterSubDisease customAdapter = new CustomAdapterSubDisease(SubDiseaseActivity.this, subDiseases, patientName, patientCPR);
+        CustomAdapterJsonObjects customAdapter = new CustomAdapterJsonObjects(SubDiseaseActivity.this, jsonArray, patientName,patientCPR);
         recyclerView.setAdapter(customAdapter); // set the Adapter to RecyclerView
+
+        makeToolBar();
+
     }
 
 

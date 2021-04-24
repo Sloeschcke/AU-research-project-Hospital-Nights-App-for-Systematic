@@ -9,14 +9,26 @@
       "item1": "Disease A",
       "item2": "Treatment Z",
       "item3": "Iboprohen",
-      "subcat1": [
-        {
-          "sub1": "subDisease A",
-          "sub2": "https://www.researchgate.net/profile/Richard-Pak/publication/249955888/figure/fig1/AS:339811522105355@1458028788794/Hard-copy-patient-record.png",
-          "sub3": "Patient_Record1.png"
-        },
-        {"sub4": "subDisease B"
-        }
+      "layer2": [
+                {
+                  "sub1": "subDisease A",
+                  "sub2": "https://www.researchgate.net/profile/Richard-Pak/publication/249955888/figure/fig1/AS:339811522105355@1458028788794/Hard-copy-patient-record.png",
+                  "sub3": "Patient_Record1.png"
+                },
+                {
+                  "sub4": "subDisease B",
+                  "subcat1": [
+                              {
+                                "sub1": "3layer",
+                                "sub2": "https://www.researchgate.net/profile/Richard-Pak/publication/249955888/figure/fig1/AS:339811522105355@1458028788794/Hard-copy-patient-record.png",
+                                "sub3": "Patient_Record1.png"
+                              },
+                              {
+                                "sub4": "subDisease B",
+                                "sub111": "subDisease 90"
+                              }
+                             ]
+                }
                 ],
       "item6": "hey"
     },
@@ -30,7 +42,8 @@
           "sub2": "https://www.researchgate.net/profile/Richard-Pak/publication/249955888/figure/fig1/AS:339811522105355@1458028788794/Hard-copy-patient-record.png",
           "sub3": "Patient_Record1.png"
         },
-        {"sub4": "subDisease B"
+        {
+          "sub4": "subDisease B"
         }
       ]
     }
