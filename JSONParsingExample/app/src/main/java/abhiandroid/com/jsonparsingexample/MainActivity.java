@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<ArrayList<String>> listListItem= new ArrayList<ArrayList<String>>();
     String patientName ="";
     String patientCPR ="";
+    private String backgroundColor;
+    private String itemColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,70 +55,19 @@ public class MainActivity extends AppCompatActivity {
             // fetch name and cpr and store it in arraylist
             patientName = patientDetail.getString("name");
             patientCPR = patientDetail.getString("cpr");
-
+            backgroundColor = patientDetail.getString("backgroundColor");
+            itemColor = patientDetail.getString("itemColor");
 
             // fetch JSONArray named diseases
             layer1 = obj.getJSONArray("layer1");
-
-            /*
-            JSONObject object = new JSONObject ();
-            JSONArray keys = object.names ();
-
-            for (int i = 0; i < keys.length (); i++) {
-
-                String key = keys.getString (i); // Here's your key
-                String value = object.getString (key); // Here's your value
-
-            }*/
-
-            ArrayList<JSONObject> jsonObjs= new ArrayList<JSONObject>();
-            //JSONArray jsonInnerArray;
-
-            // implement for loop for getting list data
-            for (int i = 0; i < layer1.length(); i++) {
-                ArrayList<String>listItem= new ArrayList<String>();
-                try {
-
-                    // create a JSONObject for fetching single user data
-                    JSONObject innerObj = layer1.getJSONObject(i);
-                    jsonObjs.add(innerObj);
-                    Iterator<String> keys = innerObj.keys();
-                    do {
-                        String keyValue = (String) keys.next();
-                        boolean keyValueIsObject= innerObj.getString(keyValue).substring(0,1).equals("[");
-                        if (keyValueIsObject) {
-                            jsonInnerArray = innerObj.getJSONArray(keyValue);
-                            arrayName = keyValue;
-                            System.out.println(jsonInnerArray );
-                            System.out.println("HEY");
-
-                            continue;
-                        } else {
-                            String tmp = innerObj.getString(keyValue).substring(0,1);
-                            System.out.println(tmp);
-                            System.out.println(keyValue);
-                        }
-                        } while (keys.hasNext()) ;
-                    } catch(JSONException e){
-                        e.printStackTrace();
-                    }
-                // fetch data and store it in arraylist
-                //diseaseNames.add(userDetail.getString("diseaseName"));
-                //treatments.add(userDetail.getString("treatment"));
-                //medications.add(userDetail.getString("medication"));
-                //plannedSurgeries.add(userDetail.getString("plannedSurgery"));
-            }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
-        CustomAdapterJsonObjects customAdapter = new CustomAdapterJsonObjects(MainActivity.this, layer1, patientName,patientCPR);
+        CustomAdapterJsonObjects customAdapter = new CustomAdapterJsonObjects(MainActivity.this, layer1, patientName,patientCPR, backgroundColor, itemColor);
         recyclerView.setAdapter(customAdapter); // set the Adapter to RecyclerView
-        //CustomAdapterDisease customAdapter = new CustomAdapterDisease(MainActivity.this, diseaseNames, treatments, medications,plannedSurgeries, subDiseases);
-        //recyclerView.setAdapter(customAdapter); // set the Adapter to RecyclerView
-
         // create toolbar with description of patient
         makeToolBar(patientName, patientCPR);
     }

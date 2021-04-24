@@ -30,18 +30,22 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
     private final String patientName;
     private final String cpr;
     private final int arraySize;
+    private final String backgroundColor;
+    private final String itemColor;
     JSONArray jsonArray;
     ArrayList<String> items;
     ArrayList<ArrayList<SubDiseaseItem>> subDiseases;
 
     Context context;
 
-    public CustomAdapterJsonObjects(Context context, JSONArray jsonArray, String patientName, String cpr) {
+    public CustomAdapterJsonObjects(Context context, JSONArray jsonArray, String patientName, String cpr, String mBackgroundColor, String mItemColor) {
         this.context = context;
         this.jsonArray= jsonArray;
         this.patientName = patientName;
         this.cpr = cpr;
         this.arraySize = jsonArray.length();
+        this.backgroundColor = mBackgroundColor;
+        this.itemColor = mItemColor;
     }
 
     @Override
@@ -49,6 +53,7 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
         // inflate the item Layout
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.rowlayouthospital, parent, false);
 
+        //Make room for largest jsonObject
         int numberOfItems = 0;
         try {
             for(int i = 0; i < jsonArray.length(); i++){
@@ -61,7 +66,7 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        MyViewHolder vh = new MyViewHolder(v,numberOfItems ); // pass the view to View Holder
+        MyViewHolder vh = new MyViewHolder(v,numberOfItems , backgroundColor, itemColor); // pass the view to View Holder
         return vh;
     }
     @Override
@@ -74,58 +79,12 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
                 final String keyValue = (String) keys.next();
                 boolean keyValueIsObject= innerObj.getString(keyValue).substring(0,1).equals("[");
                 if (keyValueIsObject) {
-                    // use key as title
-                    TextView view = (TextView) holder.tv[mCounter ];
-                    view.setText(keyValue);
+                    makeTextViewWithInnerObject(holder.tv[mCounter], innerObj, keyValue);
                     mCounter  = mCounter+3;
-                    //add onclick listener
-                    view.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            // display a toast with person name on item click
-                            Toast.makeText(context, keyValue, Toast.LENGTH_SHORT).show();
-                            JSONArray subArray = new JSONArray();
-                            try {
-                                subArray = innerObj.getJSONArray(keyValue);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            Intent intent = new Intent(context, SubDiseaseActivity.class);
-                            //intent.putStringArrayListExtra("subDiseases",new ArrayList<>(subDiseases.get(position)));
-                            intent.putExtra("patientName", patientName);
-                            intent.putExtra("cpr", cpr);
-                            intent.putExtra("jsonArray", subArray.toString());
-                            context.startActivity(intent);
-
-                        }
-                    });
                 } else {
                     final String txt = innerObj.getString(keyValue);
                     if(txt.length() >3 && txt.substring(0,4).equals("http")){
-                        ImageView imageView = (ImageView) holder.tv[mCounter+1];
-                        imageView.setVisibility(View.VISIBLE);
-                        Picasso.get().load(txt).fit().centerInside().into(imageView);
-                        ((TextView) holder.tv[mCounter]).setVisibility(View.GONE); //hide textview
-
-                        imageView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                // display a toast with person name on item click
-                                Intent intent = new Intent(context, DetailActivity.class);
-                                //intent.putStringArrayListExtra("subDiseases",new ArrayList<>(subDiseases.get(position)));
-                                intent.putExtra("url", txt);
-                                intent.putExtra("patientName", patientName);
-                                intent.putExtra("cpr", cpr);
-                                Iterator<String> innerKeys = innerObj.keys();
-                                try {
-                                    intent.putExtra("recordName", innerObj.getString(innerKeys.next()));
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                                context.startActivity(intent);
-
-                            }
-                        });
+                        makeImageView(holder, mCounter, innerObj, txt);
                         mCounter = mCounter + 3;
                     }else {
                         ((TextView) holder.tv[mCounter]).setText(txt);
@@ -138,7 +97,10 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
             e.printStackTrace();
         }
 
-        // hide views with no text
+        removeEmptyViews(holder);
+    }
+
+    private void removeEmptyViews(MyViewHolder holder) {
         for (int j = 0; j < holder.tv.length; j=j+3){
             TextView view = (TextView) holder.tv[j];
             boolean isEmptyTextView =view.getText().toString().equals("");
@@ -151,6 +113,60 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
         }
     }
 
+    private void makeTextViewWithInnerObject(View view1, final JSONObject innerObj, final String keyValue) {
+        // use key as title
+        TextView view = (TextView) view1;
+        view.setText(keyValue);
+        //add onclick listener
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // display a toast with person name on item click
+                Toast.makeText(context, keyValue, Toast.LENGTH_SHORT).show();
+                JSONArray subArray = new JSONArray();
+                try {
+                    subArray = innerObj.getJSONArray(keyValue);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Intent intent = new Intent(context, SubDiseaseActivity.class);
+                //intent.putStringArrayListExtra("subDiseases",new ArrayList<>(subDiseases.get(position)));
+                intent.putExtra("patientName", patientName);
+                intent.putExtra("cpr", cpr);
+                intent.putExtra("jsonArray", subArray.toString());
+                context.startActivity(intent);
+
+            }
+        });
+    }
+
+    private void makeImageView(MyViewHolder holder, int mCounter, final JSONObject innerObj, final String txt) {
+        ImageView imageView = (ImageView) holder.tv[mCounter+1];
+        imageView.setVisibility(View.VISIBLE);
+        Picasso.get().load(txt).fit().centerInside().into(imageView);
+        ((TextView) holder.tv[mCounter]).setVisibility(View.GONE); //hide textview
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // display a toast with person name on item click
+                Intent intent = new Intent(context, DetailActivity.class);
+                //intent.putStringArrayListExtra("subDiseases",new ArrayList<>(subDiseases.get(position)));
+                intent.putExtra("url", txt);
+                intent.putExtra("patientName", patientName);
+                intent.putExtra("cpr", cpr);
+                Iterator<String> innerKeys = innerObj.keys();
+                try {
+                    intent.putExtra("recordName", innerObj.getString(innerKeys.next()));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                context.startActivity(intent);
+
+            }
+        });
+    }
+
     @Override
     public int getItemCount() {
         return arraySize;
@@ -158,8 +174,9 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
+        private final int backgroundColor;
+        private final int itemColor;
         private ImageView imgView;
-        private int numberOfItems;
         private View borderTitle;
         private TextView titleView;
         private View border;
@@ -167,15 +184,15 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
         View[] tv;
 
         @SuppressLint("ResourceType")
-        public MyViewHolder(View itemView, int numberOfItems) {
+        public MyViewHolder(View itemView, int numberOfItems, String mBackgroundColor, String mItemColor) {
             super(itemView);
-            this.numberOfItems = numberOfItems;
             tv = new View[numberOfItems*3];
             int counter = 0;
 
             myLinearLayout = (LinearLayout) itemView.findViewById(R.id.linLayout);
 
-            int size = numberOfItems; // total number of TextViews to add
+            backgroundColor = Color.parseColor(mBackgroundColor);
+            itemColor = Color.parseColor("#ffbdbdbd");
             int textViewBorder = context.getResources().getDimensionPixelSize(R.dimen.textViewborder);
             int textViewHeight = context.getResources().getDimensionPixelSize(R.dimen.textViewHeight);
             int textViewWidth = context.getResources().getDimensionPixelSize(R.dimen.textViewWidth);
@@ -184,8 +201,6 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
             titleView = new TextView(context);
             titleView.setGravity(Gravity.LEFT| Gravity.CENTER);
             titleView.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.WRAP_CONTENT, RecyclerView.LayoutParams.WRAP_CONTENT));
-
-            //titleView.setText("Alarm: title"); //arbitrary task
             titleView.setTextSize(20);
             titleView.setTextColor(Color.BLACK);
             titleView.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
@@ -208,13 +223,13 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
             counter ++;
             TextView textView;
 
-            for (int i = 1; i < size; i++) // i=1 because tile view already added
+            for (int i = 1; i < numberOfItems; i++) // i=1 because tile view already added
             {
                 //Create Item
                 textView = new TextView(context);
                 textView.setGravity(Gravity.LEFT | Gravity.CENTER);
                 textView.setLayoutParams(new RecyclerView.LayoutParams(textViewWidth,textViewHeight));
-                textView.setBackgroundResource(android.R.color.holo_blue_bright);
+                textView.setBackgroundResource(itemColor);
                 //temp.setText("Alarm: " + i); //arbitrary task
                 textView.setTextSize(20);
                 textView.setTextColor(Color.BLACK);

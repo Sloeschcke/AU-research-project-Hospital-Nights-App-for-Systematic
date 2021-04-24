@@ -25,6 +25,8 @@ public class SubDiseaseActivity extends AppCompatActivity {
     String patientName ="";
     String patientCPR ="";
     JSONArray jsonArray = new JSONArray();
+    private String backgroundColor;
+    private String itemColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,8 @@ public class SubDiseaseActivity extends AppCompatActivity {
         Intent intent = getIntent();
         patientName= intent.getStringExtra("patientName");
         patientCPR= intent.getStringExtra("cpr");
+        backgroundColor= intent.getStringExtra("backgroundColor");
+        itemColor= intent.getStringExtra("itemColor");
         String jsonArrayString = intent.getStringExtra("jsonArray");
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -48,7 +52,7 @@ public class SubDiseaseActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
-        CustomAdapterJsonObjects customAdapter = new CustomAdapterJsonObjects(SubDiseaseActivity.this, jsonArray, patientName,patientCPR);
+        CustomAdapterJsonObjects customAdapter = new CustomAdapterJsonObjects(SubDiseaseActivity.this, jsonArray, patientName,patientCPR,backgroundColor,itemColor);
         recyclerView.setAdapter(customAdapter); // set the Adapter to RecyclerView
 
         makeToolBar();
