@@ -9,14 +9,10 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="62e0652a-9780-492d-953d-c076457c438b" name="Default Changelist" comment="Fixed detail image">
-      <change afterPath="$PROJECT_DIR$/src/main/java/abhiandroid/com/jsonparsingexample/CustomAdapterJsonObjects.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="62e0652a-9780-492d-953d-c076457c438b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/src/main/assets/patient_list1.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/assets/patient_list1.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/abhiandroid/com/jsonparsingexample/CustomAdapterJsonObjects.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/abhiandroid/com/jsonparsingexample/CustomAdapterJsonObjects.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/abhiandroid/com/jsonparsingexample/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/abhiandroid/com/jsonparsingexample/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/rowlayouthospital.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/rowlayouthospital.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/values/colors.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/values/dimens.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/values/dimens.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -36,14 +32,14 @@
     </system>
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.63667524">
+    <splitter split-orientation="horizontal" split-proportion="0.65136296">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/abhiandroid/com/jsonparsingexample/CustomAdapterDisease.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="122">
-                  <caret line="45" column="63" lean-forward="true" selection-start-line="45" selection-start-column="8" selection-end-line="45" selection-end-column="63" />
+                <state relative-caret-position="41">
+                  <caret line="50" column="43" selection-start-line="50" selection-start-column="43" selection-end-line="50" selection-end-column="43" />
                 </state>
               </provider>
             </entry>
@@ -51,33 +47,14 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/abhiandroid/com/jsonparsingexample/CustomAdapterJsonObjects.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="474">
-                  <caret line="148" column="68" selection-start-line="148" selection-start-column="68" selection-end-line="148" selection-end-column="68" />
+                <state relative-caret-position="391">
+                  <caret line="89" column="51" selection-start-line="89" selection-start-column="51" selection-end-line="89" selection-end-column="51" />
                   <folding>
-                    <element signature="e#3134#3135#0" expanded="true" />
-                    <element signature="e#3158#3159#0" expanded="true" />
-                    <element signature="e#4669#4737#0" expanded="true" />
-                    <element signature="e#4775#4842#0" expanded="true" />
-                    <element signature="e#5448#5516#0" expanded="true" />
+                    <element signature="e#4537#4538#0" expanded="true" />
+                    <element signature="e#5257#5325#0" expanded="true" />
+                    <element signature="e#5360#5428#0" expanded="true" />
+                    <element signature="e#5462#5529#0" expanded="true" />
                   </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/res/values/dimens.xml">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="90">
-                  <caret line="6" column="34" selection-start-line="6" selection-start-column="34" selection-end-line="6" selection-end-column="34" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/res/values/colors.xml">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="75">
-                  <caret line="5" column="35" selection-start-line="5" selection-start-column="35" selection-end-line="5" selection-end-column="35" />
                 </state>
               </provider>
             </entry>
@@ -85,7 +62,7 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/abhiandroid/com/jsonparsingexample/SubDiseaseActivity.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="443">
+                <state relative-caret-position="593">
                   <caret line="74" column="137" selection-start-line="74" selection-start-column="137" selection-end-line="74" selection-end-column="137" />
                   <folding>
                     <element signature="imports" expanded="true" />
@@ -97,24 +74,11 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/java/abhiandroid/com/jsonparsingexample/MainActivity.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="187">
-                  <caret line="113" column="107" selection-start-line="113" selection-start-column="107" selection-end-line="113" selection-end-column="107" />
+                <state relative-caret-position="109">
+                  <caret line="45" column="43" selection-start-line="45" selection-start-column="43" selection-end-line="45" selection-end-column="43" />
                   <folding>
                     <element signature="imports" expanded="true" />
                     <element signature="e#2517#2529#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="jar://$USER_HOME$/Library/Android/sdk/platforms/android-24/android.jar!/android/view/ContextThemeWrapper.class">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="420">
-                  <caret line="38" column="24" selection-start-line="38" selection-start-column="24" selection-end-line="38" selection-end-column="24" />
-                  <folding>
-                    <element signature="e#1106#1107#0" expanded="true" />
-                    <element signature="e#1157#1158#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -134,11 +98,11 @@
       </split-first>
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/assets/patient_list1.json">
               <provider selected="true" editor-type-id="text-editor">
-                <state>
-                  <caret column="14" selection-start-column="14" selection-end-column="14" />
+                <state relative-caret-position="390">
+                  <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
                 </state>
               </provider>
             </entry>
@@ -152,10 +116,10 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/res/layout/rowlayouthospital.xml">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="808">
+                <state relative-caret-position="604">
                   <caret line="54" column="7" selection-start-line="54" selection-start-column="7" selection-end-line="54" selection-end-column="7" />
                 </state>
               </provider>
@@ -203,18 +167,18 @@
         <option value="$PROJECT_DIR$/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/src/main/res/layout/rowlayout.xml" />
         <option value="$PROJECT_DIR$/src/main/assets/patient_list.json" />
-        <option value="$PROJECT_DIR$/src/main/java/abhiandroid/com/jsonparsingexample/MainActivity.java" />
-        <option value="$PROJECT_DIR$/src/main/assets/patient_list1.json" />
         <option value="$PROJECT_DIR$/src/main/res/layout/rowlayouthospital.xml" />
         <option value="$PROJECT_DIR$/src/main/res/values/colors.xml" />
         <option value="$PROJECT_DIR$/src/main/res/values/dimens.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/abhiandroid/com/jsonparsingexample/MainActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/assets/patient_list1.json" />
         <option value="$PROJECT_DIR$/src/main/java/abhiandroid/com/jsonparsingexample/CustomAdapterJsonObjects.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds">
     <option name="y" value="23" />
-    <option name="width" value="1426" />
+    <option name="width" value="1551" />
     <option name="height" value="1003" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -419,7 +383,14 @@
       <option name="project" value="LOCAL" />
       <updated>1618330322434</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Progress!">
+      <created>1619217292999</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1619217292999</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TodoView">
@@ -432,11 +403,11 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="823" extended-state="6" />
+    <frame x="0" y="23" width="1551" height="1003" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.08226037" />
+      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.07620941" />
       <window_info id="Structure" order="2" side_tool="true" />
       <window_info id="Build Variants" order="3" side_tool="true" />
       <window_info id="Image Layers" order="4" />
@@ -444,14 +415,14 @@
       <window_info id="Resources Explorer" order="6" weight="0.32960597" />
       <window_info id="Capture Tool" order="7" />
       <window_info id="Favorites" order="8" side_tool="true" />
-      <window_info anchor="bottom" id="Build" order="0" weight="0.1053787" />
-      <window_info anchor="bottom" id="Run" order="1" weight="0.12311901" />
-      <window_info anchor="bottom" id="Logcat" order="2" weight="0.5718194" />
+      <window_info anchor="bottom" id="Build" order="0" weight="0.41163558" />
+      <window_info active="true" anchor="bottom" id="Run" order="1" visible="true" weight="0.34796926" />
+      <window_info anchor="bottom" id="Logcat" order="2" weight="0.5708013" />
       <window_info anchor="bottom" id="TODO" order="3" weight="0.32930845" />
       <window_info anchor="bottom" id="Android Profiler" order="4" weight="0.32930845" />
       <window_info anchor="bottom" id="Find" order="5" weight="0.32930845" />
-      <window_info anchor="bottom" id="Terminal" order="6" weight="0.43139407" />
-      <window_info anchor="bottom" id="Debug" order="7" weight="0.32930845" />
+      <window_info anchor="bottom" id="Terminal" order="6" weight="0.34577388" />
+      <window_info anchor="bottom" id="Debug" order="7" weight="0.46212953" />
       <window_info anchor="bottom" id="Flutter Performance" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.32930845" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
@@ -471,9 +442,20 @@
     <MESSAGE value="Second layer working" />
     <MESSAGE value="Fixed images - Todo: add zoom in on images" />
     <MESSAGE value="Fixed detail image" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed detail image" />
+    <MESSAGE value="Progress!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Progress!" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/abhiandroid/com/jsonparsingexample/CustomAdapterJsonObjects.java</url>
+          <line>89</line>
+          <properties />
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="app">
         <watch expression="intent.mExtras" />
@@ -628,41 +610,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/abhiandroid/com/jsonparsingexample/SubDiseaseActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="443">
-          <caret line="74" column="137" selection-start-line="74" selection-start-column="137" selection-end-line="74" selection-end-column="137" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/abhiandroid/com/jsonparsingexample/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="113" column="107" selection-start-line="113" selection-start-column="107" selection-end-line="113" selection-end-column="107" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2517#2529#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/abhiandroid/com/jsonparsingexample/CustomAdapterDisease.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="122">
-          <caret line="45" column="63" lean-forward="true" selection-start-line="45" selection-start-column="8" selection-end-line="45" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/assets/patient_list1.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="14" selection-start-column="14" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/Library/Android/sdk/platforms/android-24/android.jar!/android/view/ViewGroup.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="305">
@@ -676,14 +623,6 @@
           <caret line="5" column="35" selection-start-line="5" selection-start-column="35" selection-end-line="5" selection-end-column="35" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/res/layout/rowlayouthospital.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="344">
-          <caret line="27" column="41" lean-forward="true" selection-start-line="27" selection-start-column="41" selection-end-line="27" selection-end-column="41" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="jar://$USER_HOME$/Library/Android/sdk/platforms/android-24/android.jar!/android/content/res/Resources.class">
       <provider selected="true" editor-type-id="text-editor">
@@ -701,16 +640,58 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/res/layout/rowlayouthospital.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="344">
+          <caret line="27" column="41" lean-forward="true" selection-start-line="27" selection-start-column="41" selection-end-line="27" selection-end-column="41" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/abhiandroid/com/jsonparsingexample/SubDiseaseActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="593">
+          <caret line="74" column="137" selection-start-line="74" selection-start-column="137" selection-end-line="74" selection-end-column="137" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/abhiandroid/com/jsonparsingexample/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="109">
+          <caret line="45" column="43" selection-start-line="45" selection-start-column="43" selection-end-line="45" selection-end-column="43" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2517#2529#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/abhiandroid/com/jsonparsingexample/CustomAdapterDisease.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="41">
+          <caret line="50" column="43" selection-start-line="50" selection-start-column="43" selection-end-line="50" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/assets/patient_list1.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/abhiandroid/com/jsonparsingexample/CustomAdapterJsonObjects.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="474">
-          <caret line="148" column="68" selection-start-line="148" selection-start-column="68" selection-end-line="148" selection-end-column="68" />
+        <state relative-caret-position="391">
+          <caret line="89" column="51" selection-start-line="89" selection-start-column="51" selection-end-line="89" selection-end-column="51" />
           <folding>
-            <element signature="e#3134#3135#0" expanded="true" />
-            <element signature="e#3158#3159#0" expanded="true" />
-            <element signature="e#4669#4737#0" expanded="true" />
-            <element signature="e#4775#4842#0" expanded="true" />
-            <element signature="e#5448#5516#0" expanded="true" />
+            <element signature="e#4537#4538#0" expanded="true" />
+            <element signature="e#5257#5325#0" expanded="true" />
+            <element signature="e#5360#5428#0" expanded="true" />
+            <element signature="e#5462#5529#0" expanded="true" />
           </folding>
         </state>
       </provider>

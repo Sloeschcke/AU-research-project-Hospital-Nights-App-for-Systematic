@@ -17,13 +17,14 @@
         },
         {"sub4": "subDisease B"
         }
-                ]
+                ],
+      "item6": "hey"
     },
     {
-      "item1": "Disease B",
+      "item199999": "Disease B",
       "item2": "Treatment 11",
       "item3": "HELLODRUG",
-      "subcat1": [
+      "subcat21": [
         {
           "sub1": "subDisease A",
           "sub2": "https://www.researchgate.net/profile/Richard-Pak/publication/249955888/figure/fig1/AS:339811522105355@1458028788794/Hard-copy-patient-record.png",

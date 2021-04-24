@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         JSONArray jsonInnerArray = new JSONArray();
         String arrayName = "";
+        JSONArray layer1 =  new JSONArray();
         try {
             // get JSONObject from JSON file
             JSONObject obj = new JSONObject(loadJSONFromAsset(getApplicationContext()));
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
 
             // fetch JSONArray named diseases
-            JSONArray layer1 = obj.getJSONArray("layer1");
+            layer1 = obj.getJSONArray("layer1");
 
             /*
             JSONObject object = new JSONObject ();
@@ -111,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
-        CustomAdapterJsonObjects customAdapter = new CustomAdapterJsonObjects(MainActivity.this,arrayName, jsonInnerArray, patientName,patientCPR);
+        CustomAdapterJsonObjects customAdapter = new CustomAdapterJsonObjects(MainActivity.this,arrayName, layer1, patientName,patientCPR);
         recyclerView.setAdapter(customAdapter); // set the Adapter to RecyclerView
         //CustomAdapterDisease customAdapter = new CustomAdapterDisease(MainActivity.this, diseaseNames, treatments, medications,plannedSurgeries, subDiseases);
         //recyclerView.setAdapter(customAdapter); // set the Adapter to RecyclerView

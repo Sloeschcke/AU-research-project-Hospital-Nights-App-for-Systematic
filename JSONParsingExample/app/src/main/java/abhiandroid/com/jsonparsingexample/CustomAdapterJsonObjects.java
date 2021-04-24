@@ -48,20 +48,54 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // infalte the item Layout
+        // inflate the item Layout
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.rowlayouthospital, parent, false);
-        MyViewHolder vh = new MyViewHolder(v); // pass the view to View Holder
+
+        int numberOfItems = 0;
+        try {
+            JSONObject innerObj = jsonArray.getJSONObject(0);
+            numberOfItems =innerObj.length();
+            System.out.println("!!!!!");
+            System.out.println(innerObj);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        MyViewHolder vh = new MyViewHolder(v,numberOfItems ); // pass the view to View Holder
         return vh;
     }
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
 
-        JSONArray innerArray;
+        ArrayList<String> itemStrings = new ArrayList<>();
+        int numberOfItems =0;
+        try {
+            int mCounter =0;
+            JSONObject innerObj = jsonArray.getJSONObject(position);
+            numberOfItems =innerObj.length();
+            Iterator<String> keys = innerObj.keys();
+            do {
+                String keyValue = (String) keys.next();
+                boolean keyValueIsObject= innerObj.getString(keyValue).substring(0,1).equals("[");
+                if (keyValueIsObject) {
+                    // use key as title
+                    ( (TextView) holder.tv[mCounter ]).setText(keyValue);
+                    mCounter  = mCounter+2;
+                    //add onclick listener
+                } else {
+                    String txt = innerObj.getString(keyValue);
+                    ( (TextView) holder.tv[mCounter]).setText(txt);
+                    mCounter  =mCounter+2;
+                }
+            } while (keys.hasNext()) ;
 
-        System.out.println("NOWWOWOWOWOWO");
-        System.out.println(jsonArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
         // implement for loop for getting list data
-        for (int i = 0; i < jsonArray.length(); i++) {
+        /*for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 // create a JSONObject for fetching single user data
                 JSONObject innerObj = jsonArray.getJSONObject(i);
@@ -82,7 +116,7 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
             } catch(JSONException e){
                 e.printStackTrace();
             }
-        }
+        }*/
 
     }
 
@@ -93,14 +127,18 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
+        private View borderTitle;
+        private TextView titleView;
         private View border;
         TextView diseaseName, treatment, medication, plannedSurgery;// init the item view's
         LinearLayout myLinearLayout;
-        @SuppressLint("ResourceType")
-        public MyViewHolder(View itemView) {
-            super(itemView);
+        View[] tv;
 
-            final float scale = context.getResources().getDisplayMetrics().density;
+        @SuppressLint("ResourceType")
+        public MyViewHolder(View itemView, int numberOfItems) {
+            super(itemView);
+            tv = new View[numberOfItems*2];
+            int counter = 0;
 
             // get the reference of item view's
             diseaseName = (TextView) itemView.findViewById(R.id.diseaseName);
@@ -109,45 +147,49 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
             plannedSurgery = (TextView) itemView.findViewById(R.id.plannedSurgery);
             myLinearLayout= (LinearLayout) itemView.findViewById(R.id.linLayout);
 
-            int size = 5; // total number of TextViews to add
+            int size = numberOfItems; // total number of TextViews to add
+            int textViewBorder = context.getResources().getDimensionPixelSize(R.dimen.textViewborder);
+            int textViewHeight = context.getResources().getDimensionPixelSize(R.dimen.textViewHeight);
+            int textViewWidth = context.getResources().getDimensionPixelSize(R.dimen.textViewWidth);
 
-            /*
-            temp = new TextView(context);
-            temp.setGravity(Gravity.CENTER | Gravity.BOTTOM);
-            temp.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.WRAP_CONTENT, RecyclerView.LayoutParams.WRAP_CONTENT));
+            titleView = new TextView(context);
+            titleView.setGravity(Gravity.LEFT| Gravity.CENTER);
+            titleView.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.WRAP_CONTENT, RecyclerView.LayoutParams.WRAP_CONTENT));
 
-            temp.setText("Alarm: " + i); //arbitrary task
-            temp.setTextSize(20);
-            temp.setTypeface(Typeface.DEFAULT_BOLD);
-            */
+            //titleView.setText("Alarm: title"); //arbitrary task
+            titleView.setTextSize(20);
+            titleView.setTextColor(Color.BLACK);
+            titleView.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+            myLinearLayout.addView(titleView);
+            tv[counter] = titleView;
+            counter ++;
 
-            TextView temp;
+            borderTitle = new View(context);
+            borderTitle.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.WRAP_CONTENT,textViewBorder ));
+            myLinearLayout.addView(borderTitle);
+            tv[counter] = borderTitle;
+            counter ++;
+            TextView textView;
 
-            for (int i = 0; i < size; i++)
+            for (int i = 1; i < size; i++) // i=1 because tile view already added
             {
-                temp = new TextView(context);
-                temp.setGravity(Gravity.LEFT | Gravity.CENTER);
-                int textViewHeight = context.getResources().getDimensionPixelSize(R.dimen.textViewHeight);
-                int textViewWidth = context.getResources().getDimensionPixelSize(R.dimen.textViewWidth);
-                //temp.setLayoutParams(new RecyclerView.LayoutParams( 350, 100));
-                temp.setLayoutParams(new RecyclerView.LayoutParams(textViewWidth,textViewHeight));
-
-                temp.setBackgroundResource(android.R.color.holo_blue_bright);
-
-
-                temp.setText("Alarm: " + i); //arbitrary task
-                temp.setTextSize(20);
-                temp.setTypeface(Typeface.DEFAULT_BOLD);
-                //temp.setTextColor(0x000);
-
-                // add the textview to the linearlayout
-                myLinearLayout.addView(temp);
-
-                int textViewBorder = context.getResources().getDimensionPixelSize(R.dimen.textViewborder);
-                android.view.ViewGroup.LayoutParams params = myLinearLayout.getLayoutParams();
+                //Create Item
+                textView = new TextView(context);
+                textView.setGravity(Gravity.LEFT | Gravity.CENTER);
+                textView.setLayoutParams(new RecyclerView.LayoutParams(textViewWidth,textViewHeight));
+                textView.setBackgroundResource(android.R.color.holo_blue_bright);
+                //temp.setText("Alarm: " + i); //arbitrary task
+                textView.setTextSize(20);
+                textView.setTextColor(Color.BLACK);
+                myLinearLayout.addView(textView);
+                tv[counter] = textView;
+                counter ++;
+                //Create Border between items
                 border = new View(context);
                 border.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.WRAP_CONTENT,textViewBorder ));
                 myLinearLayout.addView(border);
+                tv[counter] = border;
+                counter ++;
             }
         }
     }
