@@ -10,9 +10,12 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -74,7 +77,7 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
                     // use key as title
                     TextView view = (TextView) holder.tv[mCounter ];
                     view.setText(keyValue);
-                    mCounter  = mCounter+2;
+                    mCounter  = mCounter+3;
                     //add onclick listener
                     view.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -97,9 +100,37 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
                         }
                     });
                 } else {
-                    String txt = innerObj.getString(keyValue);
-                    ( (TextView) holder.tv[mCounter]).setText(txt);
-                    mCounter  =mCounter+2;
+                    final String txt = innerObj.getString(keyValue);
+                    if(txt.length() >3 && txt.substring(0,4).equals("http")){
+                        ImageView imageView = (ImageView) holder.tv[mCounter+1];
+                        imageView.setVisibility(View.VISIBLE);
+                        Picasso.get().load(txt).fit().centerInside().into(imageView);
+                        ((TextView) holder.tv[mCounter]).setVisibility(View.GONE); //hide textview
+
+                        imageView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                // display a toast with person name on item click
+                                Intent intent = new Intent(context, DetailActivity.class);
+                                //intent.putStringArrayListExtra("subDiseases",new ArrayList<>(subDiseases.get(position)));
+                                intent.putExtra("url", txt);
+                                intent.putExtra("patientName", patientName);
+                                intent.putExtra("cpr", cpr);
+                                Iterator<String> innerKeys = innerObj.keys();
+                                try {
+                                    intent.putExtra("recordName", innerObj.getString(innerKeys.next()));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                context.startActivity(intent);
+
+                            }
+                        });
+                        mCounter = mCounter + 3;
+                    }else {
+                        ((TextView) holder.tv[mCounter]).setText(txt);
+                        mCounter = mCounter + 3;
+                    }
                 }
             } while (keys.hasNext()) ;
 
@@ -108,7 +139,7 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
         }
 
         // hide views with no text
-        for (int j = 0; j < holder.tv.length; j=j+2){
+        for (int j = 0; j < holder.tv.length; j=j+3){
             TextView view = (TextView) holder.tv[j];
             boolean isEmptyTextView =view.getText().toString().equals("");
             if( isEmptyTextView ){
@@ -127,6 +158,7 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
+        private ImageView imgView;
         private int numberOfItems;
         private View borderTitle;
         private TextView titleView;
@@ -138,7 +170,7 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
         public MyViewHolder(View itemView, int numberOfItems) {
             super(itemView);
             this.numberOfItems = numberOfItems;
-            tv = new View[numberOfItems*2];
+            tv = new View[numberOfItems*3];
             int counter = 0;
 
             myLinearLayout = (LinearLayout) itemView.findViewById(R.id.linLayout);
@@ -147,6 +179,7 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
             int textViewBorder = context.getResources().getDimensionPixelSize(R.dimen.textViewborder);
             int textViewHeight = context.getResources().getDimensionPixelSize(R.dimen.textViewHeight);
             int textViewWidth = context.getResources().getDimensionPixelSize(R.dimen.textViewWidth);
+            int imageViewHeight= context.getResources().getDimensionPixelSize(R.dimen.imgViewHeight);
 
             titleView = new TextView(context);
             titleView.setGravity(Gravity.LEFT| Gravity.CENTER);
@@ -158,6 +191,14 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
             titleView.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
             myLinearLayout.addView(titleView);
             tv[counter] = titleView;
+            counter ++;
+
+            //Add imageView
+            imgView = new ImageView(context);
+            imgView.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,imageViewHeight));
+            imgView.setVisibility(View.GONE);
+            myLinearLayout.addView(imgView);
+            tv[counter] = imgView;
             counter ++;
 
             borderTitle = new View(context);
@@ -180,6 +221,14 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
                 myLinearLayout.addView(textView);
                 tv[counter] = textView;
                 counter ++;
+                //Add imageView
+                imgView = new ImageView(context);
+                imgView.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,imageViewHeight));
+                imgView.setVisibility(View.GONE);
+                myLinearLayout.addView(imgView);
+                tv[counter] = imgView;
+                counter ++;
+
                 //Create Border between items
                 border = new View(context);
                 border.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.WRAP_CONTENT,textViewBorder ));

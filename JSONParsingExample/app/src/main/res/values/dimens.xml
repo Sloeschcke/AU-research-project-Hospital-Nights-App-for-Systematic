@@ -3,6 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="textViewWidth">350dp</dimen>
+    <dimen name="imgViewHeight">200dp</dimen>
     <dimen name="textViewHeight">50dp</dimen>
     <dimen name="textViewborder">4dp</dimen>
     <dimen name="fab_margin">16dp</dimen>

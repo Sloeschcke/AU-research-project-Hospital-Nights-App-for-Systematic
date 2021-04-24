@@ -19,9 +19,10 @@
                   "sub4": "subDisease B",
                   "subcat1": [
                               {
+                                "sub3": "Patient_Record1.png",
                                 "sub1": "3layer",
-                                "sub2": "https://www.researchgate.net/profile/Richard-Pak/publication/249955888/figure/fig1/AS:339811522105355@1458028788794/Hard-copy-patient-record.png",
-                                "sub3": "Patient_Record1.png"
+                                "sub2": "https://www.researchgate.net/profile/Richard-Pak/publication/249955888/figure/fig1/AS:339811522105355@1458028788794/Hard-copy-patient-record.png"
+
                               },
                               {
                                 "sub4": "subDisease B",
