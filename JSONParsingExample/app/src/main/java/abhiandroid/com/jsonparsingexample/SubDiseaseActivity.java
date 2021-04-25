@@ -22,7 +22,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 public class SubDiseaseActivity extends AppCompatActivity {
-    public ArrayList<SubDiseaseItem> subDiseases = new ArrayList<>();
     public int position;
     String patientName ="";
     String patientCPR ="";
@@ -32,6 +31,7 @@ public class SubDiseaseActivity extends AppCompatActivity {
     private String toolbarColor;
     private String toolbarTitleColor;
     private String toolbarSubtitleColor;
+    private String iconColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +45,8 @@ public class SubDiseaseActivity extends AppCompatActivity {
         toolbarColor = intent.getStringExtra("toolbarColor");
         toolbarTitleColor = intent.getStringExtra("toolbarTitleColor");
         toolbarSubtitleColor = intent.getStringExtra("toolbarSubtitleColor");
+        iconColor = intent.getStringExtra("iconColor");
+
         String jsonArrayString = intent.getStringExtra("jsonArray");
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -60,7 +62,7 @@ public class SubDiseaseActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
-        CustomAdapterJsonObjects customAdapter = new CustomAdapterJsonObjects(SubDiseaseActivity.this, jsonArray, patientName,patientCPR,backgroundColor,itemColor, toolbarColor, toolbarTitleColor, toolbarSubtitleColor);
+        CustomAdapterJsonObjects customAdapter = new CustomAdapterJsonObjects(SubDiseaseActivity.this, jsonArray, patientName,patientCPR,backgroundColor,itemColor, toolbarColor, toolbarTitleColor, toolbarSubtitleColor, iconColor);
         recyclerView.setAdapter(customAdapter); // set the Adapter to RecyclerView
 
         makeToolBar(patientName,patientCPR,toolbarColor,toolbarTitleColor,toolbarSubtitleColor);

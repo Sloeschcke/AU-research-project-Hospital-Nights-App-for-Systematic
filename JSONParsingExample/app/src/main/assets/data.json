@@ -1,0 +1,83 @@
+{"specs": [
+  {
+    "cpr": "010220-0111",
+    "name": "Patient A",
+    "backgroundColor": "#7AD7F0",
+    "itemColor": "#B7E9F7",
+    "toolbarColor": "#FF3F51B5",
+    "toolbarTitleColor": "#FFFFFF",
+    "toolbarSubtitleColor": "#FFBF00",
+    "iconColor": "#FFBF00"
+  }
+],
+  "layer1": [
+    {
+      "item1": "Disease A ",
+      "item2": "Treatment Z #pills",
+      "item3": "Iboprohen #bacteria",
+      "layer2": [
+                {
+                  "sub2.1": "subDisease A",
+                  "sub2.2": "https://www.researchgate.net/profile/Richard-Pak/publication/249955888/figure/fig1/AS:339811522105355@1458028788794/Hard-copy-patient-record.png",
+                  "sub2.3": "Patient_Record1.png"
+                },
+                {
+                  "sub2.4": "subDisease B",
+                  "layer31": [
+                              {
+                                "sub3.1": "Patient_Record1.png",
+                                "sub3.2": "Patient journal",
+                                "sub3.3": "https://www.researchgate.net/profile/Richard-Pak/publication/249955888/figure/fig1/AS:339811522105355@1458028788794/Hard-copy-patient-record.png"
+                              },
+                              {
+                                "subX1": "subDisease B",
+                                "subX2": "subDisease X",
+                                "subX3": "subDisease Y",
+                                "subX4": "subDisease Y",
+                                "subX5": "subDisease B",
+                                "subX6": "subDisease U",
+                                "subX7": "subDisease B",
+                                "subX8": "subDisease Z"
+                              }
+                             ],
+                  "sub2.41": "subDisease B",
+                  "layer32": [
+                    {
+                      "sub3.1": "Patient_Record1.png",
+                      "sub3.2": "3layer",
+                      "sub3.3": "https://www.researchgate.net/profile/Richard-Pak/publication/249955888/figure/fig1/AS:339811522105355@1458028788794/Hard-copy-patient-record.png"
+
+                    },
+                    {
+                      "subX1": "subDisease B",
+                      "subX2": "subDisease X",
+                      "subX3": "subDisease B",
+                      "subX4": "subDisease Y",
+                      "subX5": "subDisease B",
+                      "subX6": "subDisease U",
+                      "subX7": "subDisease B",
+                      "subX8": "subDisease Z"
+                    }
+                  ]
+                }
+                ],
+      "item4": "Treatment: "
+    },
+    {
+      "item1": "Disease G",
+      "item2": "Treatment H",
+      "item3": "Medication: Z",
+      "layer2": [
+        {
+          "sub1": "subDisease A",
+          "sub2": "https://www.researchgate.net/profile/Richard-Pak/publication/249955888/figure/fig1/AS:339811522105355@1458028788794/Hard-copy-patient-record.png",
+          "sub3": "Patient_Record1.png"
+        },
+        {
+          "sub4": "subDisease B"
+        }
+      ]
+    }
+
+              ]
+}

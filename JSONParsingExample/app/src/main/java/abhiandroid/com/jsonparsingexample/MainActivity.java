@@ -20,14 +20,6 @@ import java.util.Iterator;
 
 public class MainActivity extends AppCompatActivity {
 
-    // ArrayList for person names, email Id's and mobile numbers
-    ArrayList<String> diseaseNames= new ArrayList<>();
-    ArrayList<String> treatments= new ArrayList<>();
-    ArrayList<String> medications= new ArrayList<>();
-    ArrayList<String> plannedSurgeries= new ArrayList<>();
-    ArrayList<ArrayList<SubDiseaseItem>> subDiseases = new ArrayList<ArrayList<SubDiseaseItem>>();
-
-    ArrayList<ArrayList<String>> listListItem= new ArrayList<ArrayList<String>>();
     String patientName ="";
     String patientCPR ="";
     private String backgroundColor;
@@ -35,36 +27,33 @@ public class MainActivity extends AppCompatActivity {
     private String toolbarColor;
     private String toolbarSubtitleColor;
     private String toolbarTitleColor;
+    private String iconColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // get the reference of RecyclerView
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-
-        //getSupportActionBar().hide();
 
         // set a LinearLayoutManager with default vertical orientation
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(linearLayoutManager);
-        JSONArray jsonInnerArray = new JSONArray();
-        String arrayName = "";
         JSONArray layer1 =  new JSONArray();
         try {
             // get JSONObject from JSON file
             JSONObject obj = new JSONObject(loadJSONFromAsset(getApplicationContext()));
 
             // Get patient Name and CPR
-            JSONObject patientDetail = obj.getJSONArray("patients").getJSONObject(0);
+            JSONObject specificationDetails = obj.getJSONArray("specs").getJSONObject(0);
             // fetch name and cpr and store it in arraylist
-            patientName = patientDetail.getString("name");
-            patientCPR = patientDetail.getString("cpr");
-            backgroundColor = patientDetail.getString("backgroundColor");
-            itemColor = patientDetail.getString("itemColor");
-            toolbarColor = patientDetail.getString("toolbarColor");
-            toolbarTitleColor = patientDetail.getString("toolbarTitleColor");
-            toolbarSubtitleColor = patientDetail.getString("toolbarSubtitleColor");
+            patientName = specificationDetails.getString("name");
+            patientCPR = specificationDetails.getString("cpr");
+            backgroundColor = specificationDetails.getString("backgroundColor");
+            itemColor = specificationDetails.getString("itemColor");
+            toolbarColor = specificationDetails.getString("toolbarColor");
+            toolbarTitleColor = specificationDetails.getString("toolbarTitleColor");
+            toolbarSubtitleColor = specificationDetails.getString("toolbarSubtitleColor");
+            iconColor = specificationDetails.getString("iconColor");
 
             // fetch JSONArray named diseases
             layer1 = obj.getJSONArray("layer1");
@@ -74,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
-        CustomAdapterJsonObjects customAdapter = new CustomAdapterJsonObjects(MainActivity.this, layer1, patientName,patientCPR, backgroundColor, itemColor, toolbarColor, toolbarTitleColor, toolbarSubtitleColor);
+        CustomAdapterJsonObjects customAdapter = new CustomAdapterJsonObjects(MainActivity.this, layer1, patientName,patientCPR, backgroundColor, itemColor, toolbarColor, toolbarTitleColor, toolbarSubtitleColor, iconColor);
         recyclerView.setAdapter(customAdapter); // set the Adapter to RecyclerView
         // create toolbar with description of patient
         makeToolBar(patientName, patientCPR, toolbarColor, toolbarTitleColor, toolbarSubtitleColor);
@@ -83,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     public static String loadJSONFromAsset(Context context) {
         String json = null;
         try {
-            InputStream is = context.getAssets().open("patient_list1.json");
+            InputStream is = context.getAssets().open("data.json");
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);

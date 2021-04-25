@@ -26,7 +26,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 
 public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapterJsonObjects.MyViewHolder> {
@@ -39,13 +41,11 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
     private final String toolbarSubtitleColor;
     private final String toolbarColor;
     private final String toolbarTitleColor;
+    private final String iconColor;
     JSONArray jsonArray;
-    ArrayList<String> items;
-    ArrayList<ArrayList<SubDiseaseItem>> subDiseases;
-
     Context context;
 
-    public CustomAdapterJsonObjects(Context context, JSONArray jsonArray, String patientName, String cpr, String mBackgroundColor, String mItemColor, String mToolBarColor, String mToolbarTitleColor, String mToolbarSubtitleColor) {
+    public CustomAdapterJsonObjects(Context context, JSONArray jsonArray, String patientName, String cpr, String mBackgroundColor, String mItemColor, String mToolBarColor, String mToolbarTitleColor, String mToolbarSubtitleColor, String itemColor) {
         this.context = context;
         this.jsonArray= jsonArray;
         this.patientName = patientName;
@@ -56,6 +56,7 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
         this.toolbarColor = mToolBarColor;
         this.toolbarTitleColor = mToolbarTitleColor;
         this.toolbarSubtitleColor = mToolbarSubtitleColor;
+        this.iconColor = itemColor;
     }
 
     @Override
@@ -76,7 +77,7 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        MyViewHolder vh = new MyViewHolder(v,numberOfItems , backgroundColor, itemColor); // pass the view to View Holder
+        MyViewHolder vh = new MyViewHolder(v,numberOfItems , backgroundColor, itemColor, iconColor); // pass the view to View Holder
         return vh;
     }
     @Override
@@ -97,7 +98,12 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
                         makeImageView(holder, mCounter, innerObj, txt);
                         mCounter = mCounter + 3;
                     }else {
-                        ((TextView) holder.tv[mCounter]).setText(txt);
+
+                        if(txt.indexOf("#") != -1){
+                            addIconToTextView(holder.tv[mCounter], txt);
+                        }else{
+                            ((TextView) holder.tv[mCounter]).setText(txt);
+                        }
                         mCounter = mCounter + 3;
                     }
                 }
@@ -108,6 +114,16 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
         }
 
         removeEmptyViews(holder);
+    }
+
+    private void addIconToTextView(View view, String txt) {
+        int idx = txt.indexOf("#");
+        String iconString= txt.substring(idx+1,txt.length()); //Works
+        String withoutIconText = txt.substring(0,idx-1); //Works
+        TextView textView =((TextView) view);
+        textView.setText(withoutIconText);
+        Drawable unwrappedDrawable = getDrawable(iconColor,iconString); // TODO: add color and icon from file
+        textView.setCompoundDrawables(null, null, unwrappedDrawable, null);
     }
 
     private void removeEmptyViews(MyViewHolder holder) {
@@ -149,6 +165,7 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
                 intent.putExtra("toolbarColor", toolbarColor);
                 intent.putExtra("toolbarTitleColor", toolbarTitleColor);
                 intent.putExtra("toolbarSubtitleColor", toolbarSubtitleColor);
+                intent.putExtra("iconColor", iconColor);
                 context.startActivity(intent);
 
             }
@@ -175,6 +192,8 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
                 intent.putExtra("toolbarColor", toolbarColor);
                 intent.putExtra("toolbarTitleColor", toolbarTitleColor);
                 intent.putExtra("toolbarSubtitleColor", toolbarSubtitleColor);
+                intent.putExtra("iconColor", iconColor);
+
                 Iterator<String> innerKeys = innerObj.keys();
                 try {
                     intent.putExtra("recordName", innerObj.getString(innerKeys.next()));
@@ -202,7 +221,7 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
         View[] tv;
 
         @SuppressLint("ResourceType")
-        public MyViewHolder(View itemView, int numberOfItems, String mBackgroundColor, String mItemColor) {
+        public MyViewHolder(View itemView, int numberOfItems, String mBackgroundColor, String mItemColor, String iconColor) {
             super(itemView);
             tv = new View[numberOfItems*3];
             int counter = 0;
@@ -224,7 +243,7 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
 
 
             //titleView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pills, 0);
-            Drawable unwrappedDrawable = getDrawable();
+            Drawable unwrappedDrawable = getDrawable(iconColor,"pills"); // TODO: add color and icon from file
             titleView.setCompoundDrawables(null, null, unwrappedDrawable, null);
 
             myLinearLayout.addView(titleView);
@@ -248,7 +267,7 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
 
             for (int i = 1; i < numberOfItems; i++) // i=1 because tile view already added
             {
-                //Create Item
+                //Create textview
                 textView = new TextView(context);
                 textView.setGravity(Gravity.LEFT | Gravity.CENTER);
                 textView.setLayoutParams(new RecyclerView.LayoutParams(textViewWidth,textViewHeight));
@@ -275,16 +294,23 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
             }
         }
 
-        private Drawable getDrawable(String color, String icon) {
-            Drawable unwrappedDrawable = AppCompatResources.getDrawable(context, R.drawable.ic_pills);
-            Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
-            DrawableCompat.setTint(wrappedDrawable, Color.YELLOW);
-            int h = wrappedDrawable.getIntrinsicHeight();
-            int w = wrappedDrawable.getIntrinsicWidth();
-            wrappedDrawable.setBounds( 0, 0, w, h );
-            return unwrappedDrawable;
-        }
-    }
-    
 
+    }
+
+    private Drawable getDrawable(String color, String icon) {
+        //iconmap
+
+        Map<String, Integer> iconMap= new HashMap<>();
+        iconMap.put("pills", R.drawable.ic_pills);
+        iconMap.put("bacteria", R.drawable.ic_bacteria);
+
+
+        Drawable unwrappedDrawable = AppCompatResources.getDrawable(context, iconMap.get(icon));
+        Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
+        DrawableCompat.setTint(wrappedDrawable, Color.parseColor(iconColor));
+        int h = wrappedDrawable.getIntrinsicHeight();
+        int w = wrappedDrawable.getIntrinsicWidth();
+        wrappedDrawable.setBounds( 0, 0, w, h );
+        return unwrappedDrawable;
+    }
 }
