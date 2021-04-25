@@ -1,6 +1,8 @@
 package abhiandroid.com.jsonparsingexample;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +29,9 @@ public class SubDiseaseActivity extends AppCompatActivity {
     JSONArray jsonArray = new JSONArray();
     private String backgroundColor;
     private String itemColor;
+    private String toolbarColor;
+    private String toolbarTitleColor;
+    private String toolbarSubtitleColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +42,9 @@ public class SubDiseaseActivity extends AppCompatActivity {
         patientCPR= intent.getStringExtra("cpr");
         backgroundColor= intent.getStringExtra("backgroundColor");
         itemColor= intent.getStringExtra("itemColor");
+        toolbarColor = intent.getStringExtra("toolbarColor");
+        toolbarTitleColor = intent.getStringExtra("toolbarTitleColor");
+        toolbarSubtitleColor = intent.getStringExtra("toolbarSubtitleColor");
         String jsonArrayString = intent.getStringExtra("jsonArray");
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -52,43 +60,25 @@ public class SubDiseaseActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
-        CustomAdapterJsonObjects customAdapter = new CustomAdapterJsonObjects(SubDiseaseActivity.this, jsonArray, patientName,patientCPR,backgroundColor,itemColor);
+        CustomAdapterJsonObjects customAdapter = new CustomAdapterJsonObjects(SubDiseaseActivity.this, jsonArray, patientName,patientCPR,backgroundColor,itemColor, toolbarColor, toolbarTitleColor, toolbarSubtitleColor);
         recyclerView.setAdapter(customAdapter); // set the Adapter to RecyclerView
 
-        makeToolBar();
+        makeToolBar(patientName,patientCPR,toolbarColor,toolbarTitleColor,toolbarSubtitleColor);
 
     }
 
-
-    public void makeToolBar(){
-        String patientName= "";
-        String cpr ="";
-        try {
-            // get JSONObject from JSON file
-            JSONObject obj = new JSONObject(loadJSONFromAsset());
-
-            // Get patient Name and CPR
-            JSONObject patientDetail = obj.getJSONArray("patients").getJSONObject(0);
-            // fetch name and cpr and store it in arraylist
-            patientName =  patientDetail.getString("name");
-            cpr =  patientDetail.getString("cpr");
-            } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
+    public void makeToolBar(String title, String subTitle, String toolBarColor, String titleColor, String subtitleColor){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        getSupportActionBar().setTitle(patientName);
-        getSupportActionBar().setSubtitle(Html.fromHtml("<font color='#FFBF00'>"+ cpr  + "</font>"));
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle((Html.fromHtml("<font color=\"" + titleColor + " \">" + title + "</font>")));
+        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor(toolBarColor));
+        actionBar.setBackgroundDrawable(colorDrawable);
+        actionBar.setSubtitle(Html.fromHtml("<font color=\"" +subtitleColor+ "\">" + subTitle  + "</font>" ));
+
     }
+
 
     // this event will enable the back
     // function to the button on press
@@ -102,20 +92,5 @@ public class SubDiseaseActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public String loadJSONFromAsset() {
-        String json = null;
-        try {
-            InputStream is = getAssets().open("patient_list1.json");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-        return json;
-    }
 
 }

@@ -3,7 +3,10 @@
     "cpr": "010220-0111",
     "name": "Patient A",
     "backgroundColor": "#7AD7F0",
-    "itemColor": "#B7E9F7"
+    "itemColor": "#B7E9F7",
+    "toolbarColor": "#FF3F51B5",
+    "toolbarTitleColor": "#FFFFFF",
+    "toolbarSubtitleColor": "#FFBF00"
   }
 ],
   "layer1": [

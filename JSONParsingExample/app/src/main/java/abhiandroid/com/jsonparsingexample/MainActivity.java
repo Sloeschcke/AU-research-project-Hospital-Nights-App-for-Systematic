@@ -1,6 +1,8 @@
 package abhiandroid.com.jsonparsingexample;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
     String patientCPR ="";
     private String backgroundColor;
     private String itemColor;
+    private String toolbarColor;
+    private String toolbarSubtitleColor;
+    private String toolbarTitleColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +62,9 @@ public class MainActivity extends AppCompatActivity {
             patientCPR = patientDetail.getString("cpr");
             backgroundColor = patientDetail.getString("backgroundColor");
             itemColor = patientDetail.getString("itemColor");
+            toolbarColor = patientDetail.getString("toolbarColor");
+            toolbarTitleColor = patientDetail.getString("toolbarTitleColor");
+            toolbarSubtitleColor = patientDetail.getString("toolbarSubtitleColor");
 
             // fetch JSONArray named diseases
             layer1 = obj.getJSONArray("layer1");
@@ -66,10 +74,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
-        CustomAdapterJsonObjects customAdapter = new CustomAdapterJsonObjects(MainActivity.this, layer1, patientName,patientCPR, backgroundColor, itemColor);
+        CustomAdapterJsonObjects customAdapter = new CustomAdapterJsonObjects(MainActivity.this, layer1, patientName,patientCPR, backgroundColor, itemColor, toolbarColor, toolbarTitleColor, toolbarSubtitleColor);
         recyclerView.setAdapter(customAdapter); // set the Adapter to RecyclerView
         // create toolbar with description of patient
-        makeToolBar(patientName, patientCPR);
+        makeToolBar(patientName, patientCPR, toolbarColor, toolbarTitleColor, toolbarSubtitleColor);
     }
 
     public static String loadJSONFromAsset(Context context) {
@@ -88,12 +96,15 @@ public class MainActivity extends AppCompatActivity {
         return json;
     }
 
-    public void makeToolBar(String title, String subTitle){
+    public void makeToolBar(String title, String subTitle, String toolBarColor, String titleColor, String subtitleColor){
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         System.out.println(title);
         System.out.println(subTitle);
-        actionBar.setTitle(title);
-        actionBar.setSubtitle(Html.fromHtml("<font color='#FFBF00'>"+ subTitle  + "</font>"));
+        actionBar.setTitle((Html.fromHtml("<font color=\"" + titleColor + " \">" + title + "</font>")));
+        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor(toolBarColor));
+        actionBar.setBackgroundDrawable(colorDrawable);
+        actionBar.setSubtitle(Html.fromHtml("<font color=\"" +subtitleColor+ "\">" + subTitle  + "</font>" ));
+
     }
 }

@@ -5,6 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -32,13 +36,16 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
     private final int arraySize;
     private final String backgroundColor;
     private final String itemColor;
+    private final String toolbarSubtitleColor;
+    private final String toolbarColor;
+    private final String toolbarTitleColor;
     JSONArray jsonArray;
     ArrayList<String> items;
     ArrayList<ArrayList<SubDiseaseItem>> subDiseases;
 
     Context context;
 
-    public CustomAdapterJsonObjects(Context context, JSONArray jsonArray, String patientName, String cpr, String mBackgroundColor, String mItemColor) {
+    public CustomAdapterJsonObjects(Context context, JSONArray jsonArray, String patientName, String cpr, String mBackgroundColor, String mItemColor, String mToolBarColor, String mToolbarTitleColor, String mToolbarSubtitleColor) {
         this.context = context;
         this.jsonArray= jsonArray;
         this.patientName = patientName;
@@ -46,6 +53,9 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
         this.arraySize = jsonArray.length();
         this.backgroundColor = mBackgroundColor;
         this.itemColor = mItemColor;
+        this.toolbarColor = mToolBarColor;
+        this.toolbarTitleColor = mToolbarTitleColor;
+        this.toolbarSubtitleColor = mToolbarSubtitleColor;
     }
 
     @Override
@@ -134,6 +144,11 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
                 intent.putExtra("patientName", patientName);
                 intent.putExtra("cpr", cpr);
                 intent.putExtra("jsonArray", subArray.toString());
+                intent.putExtra("backgroundColor", backgroundColor);
+                intent.putExtra("itemColor", itemColor);
+                intent.putExtra("toolbarColor", toolbarColor);
+                intent.putExtra("toolbarTitleColor", toolbarTitleColor);
+                intent.putExtra("toolbarSubtitleColor", toolbarSubtitleColor);
                 context.startActivity(intent);
 
             }
@@ -155,6 +170,11 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
                 intent.putExtra("url", txt);
                 intent.putExtra("patientName", patientName);
                 intent.putExtra("cpr", cpr);
+                intent.putExtra("backgroundColor", backgroundColor);
+                intent.putExtra("itemColor", itemColor);
+                intent.putExtra("toolbarColor", toolbarColor);
+                intent.putExtra("toolbarTitleColor", toolbarTitleColor);
+                intent.putExtra("toolbarSubtitleColor", toolbarSubtitleColor);
                 Iterator<String> innerKeys = innerObj.keys();
                 try {
                     intent.putExtra("recordName", innerObj.getString(innerKeys.next()));
@@ -174,8 +194,6 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        private final int backgroundColor;
-        private final int itemColor;
         private ImageView imgView;
         private View borderTitle;
         private TextView titleView;
@@ -190,9 +208,8 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
             int counter = 0;
 
             myLinearLayout = (LinearLayout) itemView.findViewById(R.id.linLayout);
+            myLinearLayout.setBackgroundColor(Color.parseColor(mBackgroundColor));
 
-            backgroundColor = Color.parseColor(mBackgroundColor);
-            itemColor = Color.parseColor("#ffbdbdbd");
             int textViewBorder = context.getResources().getDimensionPixelSize(R.dimen.textViewborder);
             int textViewHeight = context.getResources().getDimensionPixelSize(R.dimen.textViewHeight);
             int textViewWidth = context.getResources().getDimensionPixelSize(R.dimen.textViewWidth);
@@ -200,10 +217,16 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
 
             titleView = new TextView(context);
             titleView.setGravity(Gravity.LEFT| Gravity.CENTER);
-            titleView.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.WRAP_CONTENT, RecyclerView.LayoutParams.WRAP_CONTENT));
+            titleView.setLayoutParams(new RecyclerView.LayoutParams(textViewWidth, textViewHeight));
             titleView.setTextSize(20);
             titleView.setTextColor(Color.BLACK);
             titleView.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+
+
+            //titleView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pills, 0);
+            Drawable unwrappedDrawable = getDrawable();
+            titleView.setCompoundDrawables(null, null, unwrappedDrawable, null);
+
             myLinearLayout.addView(titleView);
             tv[counter] = titleView;
             counter ++;
@@ -229,8 +252,7 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
                 textView = new TextView(context);
                 textView.setGravity(Gravity.LEFT | Gravity.CENTER);
                 textView.setLayoutParams(new RecyclerView.LayoutParams(textViewWidth,textViewHeight));
-                textView.setBackgroundResource(itemColor);
-                //temp.setText("Alarm: " + i); //arbitrary task
+                textView.setBackgroundColor(Color.parseColor(mItemColor));
                 textView.setTextSize(20);
                 textView.setTextColor(Color.BLACK);
                 myLinearLayout.addView(textView);
@@ -251,6 +273,16 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
                 tv[counter] = border;
                 counter ++;
             }
+        }
+
+        private Drawable getDrawable(String color, String icon) {
+            Drawable unwrappedDrawable = AppCompatResources.getDrawable(context, R.drawable.ic_pills);
+            Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
+            DrawableCompat.setTint(wrappedDrawable, Color.YELLOW);
+            int h = wrappedDrawable.getIntrinsicHeight();
+            int w = wrappedDrawable.getIntrinsicWidth();
+            wrappedDrawable.setBounds( 0, 0, w, h );
+            return unwrappedDrawable;
         }
     }
     
