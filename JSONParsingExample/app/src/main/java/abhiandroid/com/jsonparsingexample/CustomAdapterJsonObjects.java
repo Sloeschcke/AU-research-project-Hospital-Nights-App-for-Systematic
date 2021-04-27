@@ -94,6 +94,11 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
                     mCounter  = mCounter+3;
                 } else {
                     final String txt = innerObj.getString(keyValue);
+                    /*if(mCounter != 0){
+                        txt = "\t" +txt;
+                    }
+                    final String txt_http = innerObj.getString(keyValue);
+                     */
                     if(txt.length() >3 && txt.substring(0,4).equals("http")){
                         makeImageView(holder, mCounter, innerObj, txt);
                         mCounter = mCounter + 3;
@@ -123,7 +128,7 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
         TextView textView =((TextView) view);
         textView.setText(withoutIconText);
         Drawable unwrappedDrawable = getDrawable(iconColor,iconString); // TODO: add color and icon from file
-        textView.setCompoundDrawables(null, null, unwrappedDrawable, null);
+        textView.setCompoundDrawables(unwrappedDrawable, null, null, null);
     }
 
     private void removeEmptyViews(MyViewHolder holder) {
@@ -142,7 +147,12 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
     private void makeTextViewWithInnerObject(View view1, final JSONObject innerObj, final String keyValue) {
         // use key as title
         TextView view = (TextView) view1;
-        view.setText(keyValue);
+        if(keyValue.indexOf("#") != -1){
+            addIconToTextView(view, keyValue);
+        }else{
+            view.setText(keyValue);
+        }
+        //view.setText(keyValue);
         //add onclick listener
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -233,17 +243,20 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
             int textViewHeight = context.getResources().getDimensionPixelSize(R.dimen.textViewHeight);
             int textViewWidth = context.getResources().getDimensionPixelSize(R.dimen.textViewWidth);
             int imageViewHeight= context.getResources().getDimensionPixelSize(R.dimen.imgViewHeight);
+            int leftMargin = context.getResources().getDimensionPixelSize(R.dimen.left_margin);
+            int textViewWidth_plus_leftMargin = context.getResources().getDimensionPixelSize(R.dimen.left_margin_plus_textview_width);
+
 
             titleView = new TextView(context);
             titleView.setGravity(Gravity.LEFT| Gravity.CENTER);
-            titleView.setLayoutParams(new RecyclerView.LayoutParams(textViewWidth, textViewHeight));
+            titleView.setLayoutParams(new RecyclerView.LayoutParams(textViewWidth_plus_leftMargin, textViewHeight));
             titleView.setTextSize(20);
             titleView.setTextColor(Color.BLACK);
             titleView.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
 
 
             //titleView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pills, 0);
-            Drawable unwrappedDrawable = getDrawable(iconColor,"pills"); // TODO: add color and icon from file
+            Drawable unwrappedDrawable = getDrawable(iconColor,"pills");
             titleView.setCompoundDrawables(null, null, unwrappedDrawable, null);
 
             myLinearLayout.addView(titleView);
@@ -270,7 +283,10 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
                 //Create textview
                 textView = new TextView(context);
                 textView.setGravity(Gravity.LEFT | Gravity.CENTER);
-                textView.setLayoutParams(new RecyclerView.LayoutParams(textViewWidth,textViewHeight));
+                RecyclerView.LayoutParams layoutParams = new RecyclerView.LayoutParams(textViewWidth, textViewHeight);
+                layoutParams.setMargins(leftMargin,0,0,0);
+                textView.setLayoutParams(layoutParams);
+
                 textView.setBackgroundColor(Color.parseColor(mItemColor));
                 textView.setTextSize(20);
                 textView.setTextColor(Color.BLACK);

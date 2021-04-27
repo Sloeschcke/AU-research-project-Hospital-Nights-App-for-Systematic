@@ -13,8 +13,8 @@
   "layer1": [
     {
       "item1": "Disease A ",
-      "item2": "Treatment Z #pills",
-      "item3": "Iboprohen #bacteria",
+      "item2": "Treatment Z",
+      "item3": "Iboprohen ",
       "layer2": [
                 {
                   "sub2.1": "subDisease A",
@@ -64,17 +64,17 @@
       "item4": "Treatment: "
     },
     {
-      "item1": "Disease G",
-      "item2": "Treatment H",
-      "item3": "Medication: Z",
-      "layer2": [
+      "item1": "Medications",
+      "item2": "Medication A  #pills",
+      "item3": "Medication B  #pills",
+      "Medication C  #pills": [
         {
           "sub1": "subDisease A",
           "sub2": "https://www.researchgate.net/profile/Richard-Pak/publication/249955888/figure/fig1/AS:339811522105355@1458028788794/Hard-copy-patient-record.png",
           "sub3": "Patient_Record1.png"
         },
         {
-          "sub4": "subDisease B"
+          "sub4": "subDisease B  #pills"
         }
       ]
     }
