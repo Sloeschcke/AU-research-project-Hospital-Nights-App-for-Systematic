@@ -88,25 +88,22 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
             Iterator<String> keys = innerObj.keys();
             do {
                 final String keyValue = (String) keys.next();
+                // check if there is an inner project.
                 boolean keyValueIsObject= innerObj.getString(keyValue).substring(0,1).equals("[");
                 if (keyValueIsObject) {
                     makeTextViewWithInnerObject(holder.tv[mCounter], innerObj, keyValue);
                     mCounter  = mCounter+3;
                 } else {
                     final String txt = innerObj.getString(keyValue);
-                    /*if(mCounter != 0){
-                        txt = "\t" +txt;
-                    }
-                    final String txt_http = innerObj.getString(keyValue);
-                     */
+                    // check if string has image value "http"
                     if(txt.length() >3 && txt.substring(0,4).equals("http")){
                         makeImageView(holder, mCounter, innerObj, txt);
                         mCounter = mCounter + 3;
                     }else {
-
+                        // check if string has color value "#"
                         if(txt.indexOf("#") != -1){
-                            addIconToTextView(holder.tv[mCounter], txt);
-                        }else{
+                            addIconToTextView(holder.tv[mCounter], txt, "right");
+                        } else{
                             ((TextView) holder.tv[mCounter]).setText(txt);
                         }
                         mCounter = mCounter + 3;
@@ -117,18 +114,19 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
         removeEmptyViews(holder);
     }
 
-    private void addIconToTextView(View view, String txt) {
+    private void addIconToTextView(View view, String txt, String placement) {
         int idx = txt.indexOf("#");
         String iconString= txt.substring(idx+1,txt.length()); //Works
         String withoutIconText = txt.substring(0,idx-1); //Works
         TextView textView =((TextView) view);
         textView.setText(withoutIconText);
-        Drawable unwrappedDrawable = getDrawable(iconColor,iconString); // TODO: add color and icon from file
-        textView.setCompoundDrawables(unwrappedDrawable, null, null, null);
+        Drawable unwrappedDrawable = getDrawable(iconColor,iconString);
+        if (placement.equals(("left"))){
+            textView.setCompoundDrawables(unwrappedDrawable, null, null, null);
+        } else textView.setCompoundDrawables(null, null, unwrappedDrawable, null);
     }
 
     private void removeEmptyViews(MyViewHolder holder) {
@@ -148,17 +146,15 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
         // use key as title
         TextView view = (TextView) view1;
         if(keyValue.indexOf("#") != -1){
-            addIconToTextView(view, keyValue);
+            addIconToTextView(view, keyValue, "left");
         }else{
             view.setText(keyValue);
         }
-        //view.setText(keyValue);
         //add onclick listener
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // display a toast with person name on item click
-                Toast.makeText(context, keyValue, Toast.LENGTH_SHORT).show();
                 JSONArray subArray = new JSONArray();
                 try {
                     subArray = innerObj.getJSONArray(keyValue);
@@ -191,9 +187,7 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // display a toast with person name on item click
                 Intent intent = new Intent(context, DetailActivity.class);
-                //intent.putStringArrayListExtra("subDiseases",new ArrayList<>(subDiseases.get(position)));
                 intent.putExtra("url", txt);
                 intent.putExtra("patientName", patientName);
                 intent.putExtra("cpr", cpr);
@@ -256,8 +250,8 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
 
 
             //titleView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pills, 0);
-            Drawable unwrappedDrawable = getDrawable(iconColor,"pills");
-            titleView.setCompoundDrawables(null, null, unwrappedDrawable, null);
+            //Drawable unwrappedDrawable = getDrawable(iconColor,"pills");
+            //titleView.setCompoundDrawables(null, null, unwrappedDrawable, null);
 
             myLinearLayout.addView(titleView);
             tv[counter] = titleView;
@@ -315,7 +309,8 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
 
     private Drawable getDrawable(String color, String icon) {
         //iconmap
-
+        // TODO: add items here iconMap.put("string_value_used_in_xml_file", R.drawable.)
+        // TODO: add more drawables in R.drawable file
         Map<String, Integer> iconMap= new HashMap<>();
         iconMap.put("pills", R.drawable.ic_pills);
         iconMap.put("bacteria", R.drawable.ic_bacteria);
