@@ -13,22 +13,22 @@
 ],
   "layer1": [
     {
-      "item1": "Disease A ",
-      "item2": "Treatment Z #bacteria",
-      "item3": "Iboprohen ",
-      "layer2 #pills": [
+      "item11": "Disease A ",
+      "item21": "Treatment Z #bacteria",
+      "item31": "Iboprohen ",
+      "Related diseases #pills": [
                 {
-                  "item2.1": "subDisease A",
-                  "item2.2": "https://www.researchgate.net/profile/Richard-Pak/publication/249955888/figure/fig1/AS:339811522105355@1458028788794/Hard-copy-patient-record.png",
-                  "item2.3": "Patient_Record1.png"
+                  "item12": "subDisease A",
+                  "item22": "https://www.researchgate.net/profile/Richard-Pak/publication/249955888/figure/fig1/AS:339811522105355@1458028788794/Hard-copy-patient-record.png",
+                  "item32": "Patient_Record1.png"
                 },
                 {
-                  "item2.4": "subDisease B",
-                  "layer31": [
+                  "item42": "subDisease B",
+                  "Patient records": [
                               {
-                                "item3.1": "Patient_Record1.png",
-                                "item3.2": "Patient journal",
-                                "item3.3": "https://www.researchgate.net/profile/Richard-Pak/publication/249955888/figure/fig1/AS:339811522105355@1458028788794/Hard-copy-patient-record.png"
+                                "item123": "Record 1",
+                                "item223": "Patient journal",
+                                "item323": "https://www.researchgate.net/profile/Richard-Pak/publication/249955888/figure/fig1/AS:339811522105355@1458028788794/Hard-copy-patient-record.png"
                               },
                               {
                                 "itemX1": "subDisease B",
@@ -39,12 +39,12 @@
                                 "itemX6": "subDisease U"
                               }
                              ],
-                  "item2.41": "subDisease B",
-                  "layer32": [
+                  "item52": "subDisease B",
+                  "Related diseases": [
                     {
-                      "item3.1": "Patient_Record1.png",
-                      "item3.2": "Surgery 19/03/2021",
-                      "item3.3": "https://www.researchgate.net/profile/Richard-Pak/publication/249955888/figure/fig1/AS:339811522105355@1458028788794/Hard-copy-patient-record.png"
+                      "item13": "Patient_Record2",
+                      "item23": "Surgery 19/03/2021",
+                      "item33": "https://www.researchgate.net/profile/Richard-Pak/publication/249955888/figure/fig1/AS:339811522105355@1458028788794/Hard-copy-patient-record.png"
 
                     },
                     {
@@ -58,20 +58,22 @@
                   ]
                 }
                 ],
-      "item4": "Treatment: "
+      "item44": "Treatment: "
     },
     {
-      "item1": "Medications #pills",
-      "item2": "Medication A  #pills",
-      "item3": "Medication B  #pills",
+      "item14": "Medications ",
+      "item24": "Medication A  #pills",
+      "item34": "Medication B  #pills",
       "Medication C  #pills": [
         {
-          "item4.1": "subDisease A",
-          "item4.2": "https://www.researchgate.net/profile/Richard-Pak/publication/249955888/figure/fig1/AS:339811522105355@1458028788794/Hard-copy-patient-record.png",
-          "item4.3": "Patient_Record1.png"
+          "item45": "subDisease A",
+          "item46": "https://www.researchgate.net/profile/Richard-Pak/publication/249955888/figure/fig1/AS:339811522105355@1458028788794/Hard-copy-patient-record.png",
+          "item47": "Patient_Record1.png"
         },
         {
-          "item4.4": "subDisease B  #pills"
+          "item77": "subDisease B  ",
+          "item88": "Surgery: 20/10/21  #bacteria",
+          "item99": "Medication F "
         }
       ]
     }

@@ -250,12 +250,14 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
             int imageViewHeight= context.getResources().getDimensionPixelSize(R.dimen.imgViewHeight);
             int leftMargin = context.getResources().getDimensionPixelSize(R.dimen.left_margin);
             int textViewWidth_plus_leftMargin = context.getResources().getDimensionPixelSize(R.dimen.left_margin_plus_textview_width);
+            int titleTextSize = 20;
+            int itemTextSize = 20;
 
             //Make title textView for cardview
             titleView = new TextView(context);
             titleView.setGravity(Gravity.LEFT| Gravity.CENTER);
             titleView.setLayoutParams(new RecyclerView.LayoutParams(textViewWidth_plus_leftMargin, textViewHeight));
-            titleView.setTextSize(20);
+            titleView.setTextSize(titleTextSize);
             titleView.setTextColor(Color.BLACK);
             titleView.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
             myLinearLayout.addView(titleView);
@@ -286,7 +288,7 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
                 layoutParams.setMargins(leftMargin,0,0,0);
                 textView.setLayoutParams(layoutParams);
                 textView.setBackgroundColor(Color.parseColor(mItemColor));
-                textView.setTextSize(20);
+                textView.setTextSize(itemTextSize);
                 textView.setTextColor(Color.BLACK);
                 myLinearLayout.addView(textView);
                 tv[counter] = textView;
