@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.widget.RecyclerView;
@@ -17,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -25,7 +23,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -42,10 +39,11 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
     private final String toolbarColor;
     private final String toolbarTitleColor;
     private final String iconColor;
+    private final String clickableItemColor;
     JSONArray jsonArray;
     Context context;
 
-    public CustomAdapterJsonObjects(Context context, JSONArray jsonArray, String patientName, String cpr, String mBackgroundColor, String mItemColor, String mToolBarColor, String mToolbarTitleColor, String mToolbarSubtitleColor, String itemColor) {
+    public CustomAdapterJsonObjects(Context context, JSONArray jsonArray, String patientName, String cpr, String mBackgroundColor, String mItemColor, String mToolBarColor, String mToolbarTitleColor, String mToolbarSubtitleColor, String itemColor, String clickableItemColor) {
         this.context = context;
         this.jsonArray= jsonArray;
         this.patientName = patientName;
@@ -57,6 +55,7 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
         this.toolbarTitleColor = mToolbarTitleColor;
         this.toolbarSubtitleColor = mToolbarSubtitleColor;
         this.iconColor = itemColor;
+        this.clickableItemColor = clickableItemColor;
     }
 
     @Override
@@ -88,19 +87,22 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
             Iterator<String> keys = innerObj.keys();
             do {
                 final String keyValue = (String) keys.next();
-                // check if there is an inner project.
+                // check if there is an inner JSON object.
                 boolean keyValueIsObject= innerObj.getString(keyValue).substring(0,1).equals("[");
                 if (keyValueIsObject) {
-                    makeTextViewWithInnerObject(holder.tv[mCounter], innerObj, keyValue);
+                    String txt = addTabToNonTitleText(mCounter, keyValue);
+                    makeTextViewWithInnerObject(holder.tv[mCounter], innerObj, txt);
                     mCounter  = mCounter+3;
                 } else {
-                    final String txt = innerObj.getString(keyValue);
+                    String txt = innerObj.getString(keyValue);
                     // check if string has image value "http"
                     if(txt.length() >3 && txt.substring(0,4).equals("http")){
+                        txt = addTabToNonTitleText(mCounter, txt);
                         makeImageView(holder, mCounter, innerObj, txt);
                         mCounter = mCounter + 3;
                     }else {
-                        // check if string has color value "#"
+                        txt = addTabToNonTitleText(mCounter, txt);
+                        // check if string has icon value "#"
                         if(txt.indexOf("#") != -1){
                             addIconToTextView(holder.tv[mCounter], txt, "right");
                         } else{
@@ -115,6 +117,13 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
             e.printStackTrace();
         }
         removeEmptyViews(holder);
+    }
+
+    private String addTabToNonTitleText(int mCounter, String txt) {
+        if(mCounter != 0){
+            txt = "\t"+ txt;
+        }
+        return txt;
     }
 
     private void addIconToTextView(View view, String txt, String placement) {
@@ -146,32 +155,38 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
         // use key as title
         TextView view = (TextView) view1;
         if(keyValue.indexOf("#") != -1){
-            addIconToTextView(view, keyValue, "left");
+            addIconToTextView(view, keyValue, "right");
         }else{
             view.setText(keyValue);
         }
+
+        // show affodance by using other color
+        view.setBackgroundColor(Color.parseColor(clickableItemColor));
+
         //add onclick listener
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // display a toast with person name on item click
                 JSONArray subArray = new JSONArray();
                 try {
-                    subArray = innerObj.getJSONArray(keyValue);
+                    System.out.println(keyValue.substring(3));
+                    subArray = innerObj.getJSONArray(keyValue.substring(1)); // first char is space tabs chars
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 Intent intent = new Intent(context, SubDiseaseActivity.class);
-                //intent.putStringArrayListExtra("subDiseases",new ArrayList<>(subDiseases.get(position)));
+                intent.putExtra("objName", keyValue);
                 intent.putExtra("patientName", patientName);
                 intent.putExtra("cpr", cpr);
                 intent.putExtra("jsonArray", subArray.toString());
                 intent.putExtra("backgroundColor", backgroundColor);
                 intent.putExtra("itemColor", itemColor);
+                intent.putExtra("clickableItemColor", clickableItemColor);
                 intent.putExtra("toolbarColor", toolbarColor);
                 intent.putExtra("toolbarTitleColor", toolbarTitleColor);
                 intent.putExtra("toolbarSubtitleColor", toolbarSubtitleColor);
                 intent.putExtra("iconColor", iconColor);
+
                 context.startActivity(intent);
 
             }
@@ -193,10 +208,10 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
                 intent.putExtra("cpr", cpr);
                 intent.putExtra("backgroundColor", backgroundColor);
                 intent.putExtra("itemColor", itemColor);
+                intent.putExtra("clickableItemColor", clickableItemColor);
                 intent.putExtra("toolbarColor", toolbarColor);
                 intent.putExtra("toolbarTitleColor", toolbarTitleColor);
                 intent.putExtra("toolbarSubtitleColor", toolbarSubtitleColor);
-                intent.putExtra("iconColor", iconColor);
 
                 Iterator<String> innerKeys = innerObj.keys();
                 try {
@@ -241,18 +256,13 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
             int textViewWidth_plus_leftMargin = context.getResources().getDimensionPixelSize(R.dimen.left_margin_plus_textview_width);
 
 
+            //Make title textView for cardview
             titleView = new TextView(context);
             titleView.setGravity(Gravity.LEFT| Gravity.CENTER);
             titleView.setLayoutParams(new RecyclerView.LayoutParams(textViewWidth_plus_leftMargin, textViewHeight));
             titleView.setTextSize(20);
             titleView.setTextColor(Color.BLACK);
             titleView.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-
-
-            //titleView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_pills, 0);
-            //Drawable unwrappedDrawable = getDrawable(iconColor,"pills");
-            //titleView.setCompoundDrawables(null, null, unwrappedDrawable, null);
-
             myLinearLayout.addView(titleView);
             tv[counter] = titleView;
             counter ++;
@@ -274,19 +284,19 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
 
             for (int i = 1; i < numberOfItems; i++) // i=1 because tile view already added
             {
-                //Create textview
+                //Create textview item
                 textView = new TextView(context);
                 textView.setGravity(Gravity.LEFT | Gravity.CENTER);
                 RecyclerView.LayoutParams layoutParams = new RecyclerView.LayoutParams(textViewWidth, textViewHeight);
                 layoutParams.setMargins(leftMargin,0,0,0);
                 textView.setLayoutParams(layoutParams);
-
                 textView.setBackgroundColor(Color.parseColor(mItemColor));
                 textView.setTextSize(20);
                 textView.setTextColor(Color.BLACK);
                 myLinearLayout.addView(textView);
                 tv[counter] = textView;
                 counter ++;
+
                 //Add imageView
                 imgView = new ImageView(context);
                 imgView.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,imageViewHeight));

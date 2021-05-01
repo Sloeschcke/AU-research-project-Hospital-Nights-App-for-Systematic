@@ -1,5 +1,7 @@
 package abhiandroid.com.jsonparsingexample;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -27,6 +29,10 @@ public class DetailActivity extends AppCompatActivity {
     private String patientCPR;
     private String patientName;
     private String fileName;
+    private String toolBarColor;
+    private String titleColor;
+    private String subtitleColor;
+    private String iconColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +43,19 @@ public class DetailActivity extends AppCompatActivity {
         patientName = getIntent().getStringExtra("patientName");
         patientCPR = getIntent().getStringExtra("cpr");
         fileName = getIntent().getStringExtra("recordName");
+        toolBarColor = getIntent().getStringExtra("toolbarColor");
+        titleColor = getIntent().getStringExtra("toolbarTitleColor");
+        subtitleColor = getIntent().getStringExtra("toolbarSubtitleColor");
 
         ImageView imageView = (ImageView) findViewById(R.id.image_view_detail);
         TextView fileView = (TextView) findViewById(R.id.file_name);
 
         Picasso.get().load(url).fit().centerInside().into(imageView);
         fileView.setText(fileName);
-        makeToolBar(patientName, patientCPR);
+
+        String toolbarTitle = patientName + " - " + fileName;
+
+        makeToolBar(toolbarTitle, patientCPR, toolBarColor, titleColor, subtitleColor);
     }
 
 
@@ -60,18 +72,14 @@ public class DetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void makeToolBar(String patientName, String cpr ){
+    public void makeToolBar(String title, String subTitle, String toolBarColor, String titleColor, String subtitleColor){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        getSupportActionBar().setTitle(patientName);
-        getSupportActionBar().setSubtitle(Html.fromHtml("<font color='#FFBF00'>"+ cpr  + "</font>"));
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle((Html.fromHtml("<font color=\"" + titleColor + " \">" + title + "</font>")));
+        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor(toolBarColor));
+        actionBar.setBackgroundDrawable(colorDrawable);
+        actionBar.setSubtitle(Html.fromHtml("<font color=\"" +subtitleColor+ "\">" + subTitle  + "</font>" ));
     }
 }

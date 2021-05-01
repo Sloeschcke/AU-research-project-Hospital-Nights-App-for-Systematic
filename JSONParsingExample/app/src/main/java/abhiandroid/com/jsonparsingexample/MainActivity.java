@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private String toolbarSubtitleColor;
     private String toolbarTitleColor;
     private String iconColor;
+    private String clickableItemColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
             patientCPR = specificationDetails.getString("cpr");
             backgroundColor = specificationDetails.getString("backgroundColor");
             itemColor = specificationDetails.getString("itemColor");
+            clickableItemColor = specificationDetails.getString("clickableItemColor");
             toolbarColor = specificationDetails.getString("toolbarColor");
             toolbarTitleColor = specificationDetails.getString("toolbarTitleColor");
             toolbarSubtitleColor = specificationDetails.getString("toolbarSubtitleColor");
@@ -63,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
-        CustomAdapterJsonObjects customAdapter = new CustomAdapterJsonObjects(MainActivity.this, layer1, patientName,patientCPR, backgroundColor, itemColor, toolbarColor, toolbarTitleColor, toolbarSubtitleColor, iconColor);
+        CustomAdapterJsonObjects customAdapter = new CustomAdapterJsonObjects(MainActivity.this, layer1, patientName,patientCPR, backgroundColor, itemColor, toolbarColor, toolbarTitleColor, toolbarSubtitleColor, iconColor, clickableItemColor);
         recyclerView.setAdapter(customAdapter); // set the Adapter to RecyclerView
         // create toolbar with description of patient
         makeToolBar(patientName, patientCPR, toolbarColor, toolbarTitleColor, toolbarSubtitleColor);
@@ -88,8 +90,6 @@ public class MainActivity extends AppCompatActivity {
     public void makeToolBar(String title, String subTitle, String toolBarColor, String titleColor, String subtitleColor){
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        System.out.println(title);
-        System.out.println(subTitle);
         actionBar.setTitle((Html.fromHtml("<font color=\"" + titleColor + " \">" + title + "</font>")));
         ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor(toolBarColor));
         actionBar.setBackgroundDrawable(colorDrawable);

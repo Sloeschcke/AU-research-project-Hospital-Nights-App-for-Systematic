@@ -11,15 +11,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.MenuItem;
-import android.view.View;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
 
 public class SubDiseaseActivity extends AppCompatActivity {
     public int position;
@@ -32,12 +26,15 @@ public class SubDiseaseActivity extends AppCompatActivity {
     private String toolbarTitleColor;
     private String toolbarSubtitleColor;
     private String iconColor;
+    private String lastLayerString;
+    private String clickableItemColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sub_disease);
         Intent intent = getIntent();
+        lastLayerString = intent.getStringExtra("objName");
         patientName= intent.getStringExtra("patientName");
         patientCPR= intent.getStringExtra("cpr");
         backgroundColor= intent.getStringExtra("backgroundColor");
@@ -46,6 +43,7 @@ public class SubDiseaseActivity extends AppCompatActivity {
         toolbarTitleColor = intent.getStringExtra("toolbarTitleColor");
         toolbarSubtitleColor = intent.getStringExtra("toolbarSubtitleColor");
         iconColor = intent.getStringExtra("iconColor");
+        clickableItemColor = intent.getStringExtra("clickableItemColor");
 
         String jsonArrayString = intent.getStringExtra("jsonArray");
 
@@ -56,16 +54,25 @@ public class SubDiseaseActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
 
 
+        // erase any "#" char from string
+        String toolBarTitle ="";
+        int idx = lastLayerString.indexOf("#");
+        if(idx != -1){
+            String withoutIconText = lastLayerString.substring(0,idx-1);
+            toolBarTitle = patientName + " - " + withoutIconText;
+        } else  toolBarTitle = patientName + " - " + lastLayerString;
+
+
         try {
             jsonArray= new JSONArray(jsonArrayString);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         //  call the constructor of CustomAdapter to send the reference and data to Adapter
-        CustomAdapterJsonObjects customAdapter = new CustomAdapterJsonObjects(SubDiseaseActivity.this, jsonArray, patientName,patientCPR,backgroundColor,itemColor, toolbarColor, toolbarTitleColor, toolbarSubtitleColor, iconColor);
+        CustomAdapterJsonObjects customAdapter = new CustomAdapterJsonObjects(SubDiseaseActivity.this, jsonArray, patientName,patientCPR,backgroundColor,itemColor, toolbarColor, toolbarTitleColor, toolbarSubtitleColor, iconColor, clickableItemColor);
         recyclerView.setAdapter(customAdapter); // set the Adapter to RecyclerView
 
-        makeToolBar(patientName,patientCPR,toolbarColor,toolbarTitleColor,toolbarSubtitleColor);
+        makeToolBar(toolBarTitle,patientCPR,toolbarColor,toolbarTitleColor,toolbarSubtitleColor);
 
     }
 
@@ -78,7 +85,6 @@ public class SubDiseaseActivity extends AppCompatActivity {
         ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor(toolBarColor));
         actionBar.setBackgroundDrawable(colorDrawable);
         actionBar.setSubtitle(Html.fromHtml("<font color=\"" +subtitleColor+ "\">" + subTitle  + "</font>" ));
-
     }
 
 
