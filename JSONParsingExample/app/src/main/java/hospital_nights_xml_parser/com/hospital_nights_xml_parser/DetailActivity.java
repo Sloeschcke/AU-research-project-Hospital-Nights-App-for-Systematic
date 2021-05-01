@@ -1,27 +1,19 @@
-package abhiandroid.com.jsonparsingexample;
+package hospital_nights_xml_parser.com.hospital_nights_xml_parser;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.w3c.dom.Text;
-
-import java.io.IOException;
-import java.io.InputStream;
+import hospital_nights_xml_parser.com.hospital_nights_xml_parser.R;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -32,7 +24,6 @@ public class DetailActivity extends AppCompatActivity {
     private String toolBarColor;
     private String titleColor;
     private String subtitleColor;
-    private String iconColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

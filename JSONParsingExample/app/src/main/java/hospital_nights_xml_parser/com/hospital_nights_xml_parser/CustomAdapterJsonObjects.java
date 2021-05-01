@@ -1,4 +1,4 @@
-package abhiandroid.com.jsonparsingexample;
+package hospital_nights_xml_parser.com.hospital_nights_xml_parser;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -26,6 +26,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
+import hospital_nights_xml_parser.com.hospital_nights_xml_parser.R;
 
 
 public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapterJsonObjects.MyViewHolder> {
@@ -104,7 +106,7 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
                         txt = addTabToNonTitleText(mCounter, txt);
                         // check if string has icon value "#"
                         if(txt.indexOf("#") != -1){
-                            addIconToTextView(holder.tv[mCounter], txt, "right");
+                            addIconToTextView(holder.tv[mCounter], txt);
                         } else{
                             ((TextView) holder.tv[mCounter]).setText(txt);
                         }
@@ -126,16 +128,14 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
         return txt;
     }
 
-    private void addIconToTextView(View view, String txt, String placement) {
+    private void addIconToTextView(View view, String txt) {
         int idx = txt.indexOf("#");
         String iconString= txt.substring(idx+1,txt.length()); //Works
         String withoutIconText = txt.substring(0,idx-1); //Works
         TextView textView =((TextView) view);
         textView.setText(withoutIconText);
         Drawable unwrappedDrawable = getDrawable(iconColor,iconString);
-        if (placement.equals(("left"))){
-            textView.setCompoundDrawables(unwrappedDrawable, null, null, null);
-        } else textView.setCompoundDrawables(null, null, unwrappedDrawable, null);
+        textView.setCompoundDrawables(null, null, unwrappedDrawable, null);
     }
 
     private void removeEmptyViews(MyViewHolder holder) {
@@ -152,15 +152,15 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
     }
 
     private void makeTextViewWithInnerObject(View view1, final JSONObject innerObj, final String keyValue) {
-        // use key as title
+        // use key as title and check if item has icon code "#"
         TextView view = (TextView) view1;
         if(keyValue.indexOf("#") != -1){
-            addIconToTextView(view, keyValue, "right");
+            addIconToTextView(view, keyValue);
         }else{
             view.setText(keyValue);
         }
 
-        // show affodance by using other color
+        //show affordance by using other color
         view.setBackgroundColor(Color.parseColor(clickableItemColor));
 
         //add onclick listener
@@ -169,7 +169,6 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
             public void onClick(View view) {
                 JSONArray subArray = new JSONArray();
                 try {
-                    System.out.println(keyValue.substring(3));
                     subArray = innerObj.getJSONArray(keyValue.substring(1)); // first char is space tabs chars
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -186,9 +185,7 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
                 intent.putExtra("toolbarTitleColor", toolbarTitleColor);
                 intent.putExtra("toolbarSubtitleColor", toolbarSubtitleColor);
                 intent.putExtra("iconColor", iconColor);
-
                 context.startActivity(intent);
-
             }
         });
     }
@@ -220,7 +217,6 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
                     e.printStackTrace();
                 }
                 context.startActivity(intent);
-
             }
         });
     }
@@ -254,7 +250,6 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
             int imageViewHeight= context.getResources().getDimensionPixelSize(R.dimen.imgViewHeight);
             int leftMargin = context.getResources().getDimensionPixelSize(R.dimen.left_margin);
             int textViewWidth_plus_leftMargin = context.getResources().getDimensionPixelSize(R.dimen.left_margin_plus_textview_width);
-
 
             //Make title textView for cardview
             titleView = new TextView(context);
@@ -313,14 +308,12 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
                 counter ++;
             }
         }
-
-
     }
 
     private Drawable getDrawable(String color, String icon) {
         //iconmap
         // TODO: add items here iconMap.put("string_value_used_in_xml_file", R.drawable.)
-        // TODO: add more drawables in R.drawable file
+        // TODO: add more drawables in R.drawable file: go to folder res/drawable right click folder and press new "vector asset" - then import svg file
         Map<String, Integer> iconMap= new HashMap<>();
         iconMap.put("pills", R.drawable.ic_pills);
         iconMap.put("bacteria", R.drawable.ic_bacteria);

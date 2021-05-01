@@ -1,4 +1,4 @@
-package abhiandroid.com.jsonparsingexample;
+package hospital_nights_xml_parser.com.hospital_nights_xml_parser;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

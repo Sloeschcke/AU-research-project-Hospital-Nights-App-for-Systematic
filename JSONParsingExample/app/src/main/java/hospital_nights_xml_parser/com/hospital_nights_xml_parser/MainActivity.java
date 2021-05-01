@@ -1,4 +1,4 @@
-package abhiandroid.com.jsonparsingexample;
+package hospital_nights_xml_parser.com.hospital_nights_xml_parser;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -15,8 +15,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Iterator;
+
+import hospital_nights_xml_parser.com.hospital_nights_xml_parser.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,9 +44,8 @@ public class MainActivity extends AppCompatActivity {
             // get JSONObject from JSON file
             JSONObject obj = new JSONObject(loadJSONFromAsset(getApplicationContext()));
 
-            // Get patient Name and CPR
+            // Get specs
             JSONObject specificationDetails = obj.getJSONArray("specs").getJSONObject(0);
-            // fetch name and cpr and store it in arraylist
             patientName = specificationDetails.getString("name");
             patientCPR = specificationDetails.getString("cpr");
             backgroundColor = specificationDetails.getString("backgroundColor");
@@ -56,8 +55,6 @@ public class MainActivity extends AppCompatActivity {
             toolbarTitleColor = specificationDetails.getString("toolbarTitleColor");
             toolbarSubtitleColor = specificationDetails.getString("toolbarSubtitleColor");
             iconColor = specificationDetails.getString("iconColor");
-
-            // fetch JSONArray named diseases
             layer1 = obj.getJSONArray("layer1");
 
         } catch (JSONException e) {

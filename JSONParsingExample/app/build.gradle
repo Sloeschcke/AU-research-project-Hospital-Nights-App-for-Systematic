@@ -5,7 +5,7 @@ android {
     buildToolsVersion "24.0.1"
 
     defaultConfig {
-        applicationId "abhiandroid.com.jsonparsingexample"
+        applicationId "com.hospital_nights_xml_parser"
         minSdkVersion 16
         targetSdkVersion 26
         versionCode 1

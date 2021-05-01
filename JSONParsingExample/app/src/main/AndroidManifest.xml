@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="abhiandroid.com.jsonparsingexample">
+    package="hospital_nights_xml_parser.com.hospital_nights_xml_parser">
 
     <application
         android:allowBackup="true"
@@ -9,14 +9,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".DetailActivity"
+            android:name="hospital_nights_xml_parser.com.hospital_nights_xml_parser.DetailActivity"
             android:label="@string/title_activity_detail"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".SubDiseaseActivity"
+            android:name="hospital_nights_xml_parser.com.hospital_nights_xml_parser.SubDiseaseActivity"
             android:label="@string/title_activity_sub_disease"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".MainActivity">
+        <activity android:name="hospital_nights_xml_parser.com.hospital_nights_xml_parser.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

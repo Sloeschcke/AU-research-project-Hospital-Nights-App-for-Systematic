@@ -1,4 +1,4 @@
-package abhiandroid.com.jsonparsingexample;
+package hospital_nights_xml_parser.com.hospital_nights_xml_parser;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -15,8 +15,9 @@ import android.view.MenuItem;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import hospital_nights_xml_parser.com.hospital_nights_xml_parser.R;
+
 public class SubDiseaseActivity extends AppCompatActivity {
-    public int position;
     String patientName ="";
     String patientCPR ="";
     JSONArray jsonArray = new JSONArray();
@@ -68,7 +69,7 @@ public class SubDiseaseActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        //  call the constructor of CustomAdapter to send the reference and data to Adapter
+        // Call the constructor of CustomAdapter to send the reference and data to Adapter
         CustomAdapterJsonObjects customAdapter = new CustomAdapterJsonObjects(SubDiseaseActivity.this, jsonArray, patientName,patientCPR,backgroundColor,itemColor, toolbarColor, toolbarTitleColor, toolbarSubtitleColor, iconColor, clickableItemColor);
         recyclerView.setAdapter(customAdapter); // set the Adapter to RecyclerView
 
