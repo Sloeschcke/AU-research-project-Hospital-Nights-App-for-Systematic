@@ -38,45 +38,46 @@
                                 "itemX5": "subDisease B",
                                 "itemX6": "subDisease U"
                               }
-                             ],
+                                    ],
                   "item52": "subDisease B",
                   "Related diseases": [
-                    {
-                      "item13": "Patient_Record2",
-                      "item23": "Surgery 19/03/2021",
-                      "item33": "https://www.researchgate.net/profile/Richard-Pak/publication/249955888/figure/fig1/AS:339811522105355@1458028788794/Hard-copy-patient-record.png"
+                                    {
+                                      "item13": "Patient_Record2",
+                                      "item23": "Surgery 19/03/2021",
+                                      "item33": "https://www.researchgate.net/profile/Richard-Pak/publication/249955888/figure/fig1/AS:339811522105355@1458028788794/Hard-copy-patient-record.png"
 
-                    },
-                    {
-                      "itemX1": "subDisease B",
-                      "itemX2": "subDisease X",
-                      "itemX3": "subDisease Y",
-                      "itemX4": "subDisease Y",
-                      "itemX5": "subDisease B",
-                      "itemX6": "subDisease U"
-                    }
-                  ]
+                                    },
+                                    {
+                                      "itemX1": "subDisease B",
+                                      "itemX2": "subDisease X",
+                                      "itemX3": "subDisease Y",
+                                      "itemX4": "subDisease Y",
+                                      "itemX5": "subDisease B",
+                                      "itemX6": "subDisease U"
+                                    }
+                                      ]
                 }
                 ],
       "item44": "Treatment: "
     },
+
     {
       "item14": "Medications ",
       "item24": "Medication A  #pills",
       "item34": "Medication B  #pills",
       "Medication C  #pills": [
-        {
-          "item45": "subDisease A",
-          "item46": "https://www.researchgate.net/profile/Richard-Pak/publication/249955888/figure/fig1/AS:339811522105355@1458028788794/Hard-copy-patient-record.png",
-          "item47": "Patient_Record1.png"
-        },
-        {
-          "item77": "subDisease B  ",
-          "item88": "Surgery: 20/10/21  #bacteria",
-          "item99": "Medication F "
-        }
-      ]
+                            {
+                              "item45": "subDisease A",
+                              "item46": "https://www.researchgate.net/profile/Richard-Pak/publication/249955888/figure/fig1/AS:339811522105355@1458028788794/Hard-copy-patient-record.png",
+                              "item47": "Patient_Record1.png"
+                            },
+                            {
+                              "item77": "subDisease B  ",
+                              "item88": "Surgery: 20/10/21  #bacteria",
+                              "item99": "Medication F "
+                            }
+                              ]
     }
 
-              ]
+  ]
 }

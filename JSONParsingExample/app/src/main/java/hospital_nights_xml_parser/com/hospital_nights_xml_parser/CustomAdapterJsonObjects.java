@@ -99,8 +99,8 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
                     String txt = innerObj.getString(keyValue);
                     // check if string has image value "http"
                     if(txt.length() >3 && txt.substring(0,4).equals("http")){
-                        txt = addTabToNonTitleText(mCounter, txt);
-                        makeImageView(holder, mCounter, innerObj, txt);
+                        String txt_nonTitle = addTabToNonTitleText(mCounter, txt);
+                        makeImageView(holder, mCounter, innerObj, txt_nonTitle );
                         mCounter = mCounter + 3;
                     }else {
                         txt = addTabToNonTitleText(mCounter, txt);
@@ -190,17 +190,22 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
         });
     }
 
-    private void makeImageView(MyViewHolder holder, int mCounter, final JSONObject innerObj, final String txt) {
+    private void makeImageView(MyViewHolder holder, int mCounter, final JSONObject innerObj, String txt) {
+        String txt_res = "";
+        if (txt.indexOf('\t')>=0) {  //Remove tab value if present
+            txt_res = txt.substring(1, txt.length());
+        } else txt_res = txt;
         ImageView imageView = (ImageView) holder.tv[mCounter+1];
         imageView.setVisibility(View.VISIBLE);
-        Picasso.get().load(txt).fit().centerInside().into(imageView);
+        Picasso.get().load(txt_res).fit().centerInside().into(imageView);
         ((TextView) holder.tv[mCounter]).setVisibility(View.GONE); //hide textview
 
+        final String finalTxt_res = txt_res; //intent only takes final vars
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, DetailActivity.class);
-                intent.putExtra("url", txt);
+                intent.putExtra("url", finalTxt_res);
                 intent.putExtra("patientName", patientName);
                 intent.putExtra("cpr", cpr);
                 intent.putExtra("backgroundColor", backgroundColor);
