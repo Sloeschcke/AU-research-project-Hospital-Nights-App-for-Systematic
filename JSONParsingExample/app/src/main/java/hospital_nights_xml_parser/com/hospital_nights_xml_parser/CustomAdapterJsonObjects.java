@@ -130,12 +130,13 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
 
     private void addIconToTextView(View view, String txt) {
         int idx = txt.indexOf("#");
-        String iconString= txt.substring(idx+1,txt.length()); //Works
-        String withoutIconText = txt.substring(0,idx-1); //Works
+        String iconString= txt.substring(idx+1,txt.length()); //delete "#"
+        String withoutIconText = txt.substring(0,idx-1); //delete iconstring
         TextView textView =((TextView) view);
         textView.setText(withoutIconText);
         Drawable unwrappedDrawable = getDrawable(iconColor,iconString);
-        textView.setCompoundDrawables(null, null, unwrappedDrawable, null);
+        textView.setCompoundDrawables(null, null, unwrappedDrawable, null); // place drawable icon in the right hand side
+        textView.setPadding(0,0,20,0); // add padding from Icon to right hand side
     }
 
     private void removeEmptyViews(MyViewHolder holder) {
@@ -169,7 +170,7 @@ public class CustomAdapterJsonObjects extends RecyclerView.Adapter<CustomAdapter
             public void onClick(View view) {
                 JSONArray subArray = new JSONArray();
                 try {
-                    subArray = innerObj.getJSONArray(keyValue.substring(1)); // first char is space tabs chars
+                    subArray = innerObj.getJSONArray(keyValue.substring(1)); // remove first char is space tabs chars
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
